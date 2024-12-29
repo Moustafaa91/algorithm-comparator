@@ -1,4 +1,7 @@
 import React from 'react';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 function AlgorithmSelector({ selectedAlgorithms, onSelect }) {
   const algorithms = ['BubbleSort', 'QuickSort', 'MergeSort', 'SelectionSort', 'InsertionSort', 'HeapSort', 'CycleSort'];
@@ -11,19 +14,20 @@ function AlgorithmSelector({ selectedAlgorithms, onSelect }) {
   };
 
   return (
-    <div>
-      <h3>Select Algorithms</h3>
-      {algorithms.map((algo) => (
-        <label key={algo}>
-          <input
-            type="checkbox"
-            value={algo}
-            checked={selectedAlgorithms.includes(algo)}
-            onChange={handleChange}
-          />
-          {algo}
-        </label>
-      ))}
+    <div >
+      <p><strong>Select Algorithm(s)</strong></p>
+      <FormGroup row style={{ marginRight: '-100px' }}>
+        {algorithms.map((algo, index) => (
+            <FormControlLabel
+              key={index}
+              control={<Checkbox />}
+              label={algo}
+              value={algo}
+              checked={selectedAlgorithms.includes(algo)}
+              onChange={handleChange}
+            />
+        ))}
+      </FormGroup>
     </div>
   );
 }

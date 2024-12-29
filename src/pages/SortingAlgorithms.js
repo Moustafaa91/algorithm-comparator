@@ -12,6 +12,8 @@ import {
 import { algorithms } from '../algorithms';
 import { ClipLoader } from 'react-spinners';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import { PlayCircle } from "@mui/icons-material";
 
 function SortingAlgorithms() {
   const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);
@@ -75,9 +77,9 @@ return (
             <InputSizeSelector selectedSize={selectedSize} onSelect={setSelectedSize} />
             <SortingTypes inputType={inputType} onSelect={setInputType} />
             
-            <button onClick={handleRun} disabled={loading} style={{ height: '50px' }}>
+            <Button startIcon={<PlayCircle />} variant="contained" onClick={handleRun} disabled={loading} style={{ height: '50px' }}>
                     {loading ? 'Running...' : 'Run'}
-            </button>
+            </Button >
             </div>
             </Box>
        

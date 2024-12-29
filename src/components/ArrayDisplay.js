@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 function ArrayDisplay({ title, array }) {
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10; // Number of items to display per page
+  const itemsPerPage = 20; // Number of items to display per page
   const totalPages = Math.ceil(array.length / itemsPerPage);
 
   const handleNextPage = () => {
@@ -23,18 +23,7 @@ function ArrayDisplay({ title, array }) {
       <h3>{title}</h3>
       <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
         {currentPageItems.map((item, index) => (
-          <div
-            key={index}
-            style={{
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              padding: '10px',
-              margin: '5px',
-              minWidth: '50px',
-              textAlign: 'center',
-              backgroundColor: '#f9f9f9',
-            }}
-          >
+          <div key={index} style={{ padding: '5px 10px', margin: '1px', border: '1px solid #ccc', borderRadius: '4px' }}>
             {item}
           </div>
         ))}

@@ -16,7 +16,7 @@ function Chart({ data, generationTime }) {
   if (!data.length) {
     return <p>No data to display. Run an algorithm to see results.</p>;
   }
-console.log(data);
+
   // Extract algorithm names dynamically
   const algorithms = Object.keys(data[0]).filter((key) => key !== 'inputSize');
 
@@ -24,13 +24,11 @@ console.log(data);
     <>
       <p>Data Generation Time: <strong>{generationTime.toFixed(2)} ms</strong></p>
       <ResponsiveContainer width="100%" height={400}>
-      
-        <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-        <XAxis dataKey="inputSize">
-            <Label value="Input Size (Units)" offset={-10} position="left" />
+        <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
+          <XAxis dataKey="inputSize">
+            <Label value="Input Size (Units)" offset={-40} position="insideBottom" />
           </XAxis>
           <CartesianGrid strokeDasharray="3 3" />
-          
           <YAxis>
             <Label
               value="Sort Time (ms)"
@@ -40,7 +38,7 @@ console.log(data);
             />
           </YAxis>
           <Tooltip formatter={(value) => `${value.toFixed(2)} ms`} />
-          <Legend />
+          <Legend verticalAlign="bottom" align="center" />
           {algorithms.map((algorithm) => (
             <Line
               key={algorithm}

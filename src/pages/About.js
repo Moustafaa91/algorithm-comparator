@@ -23,30 +23,31 @@ const me = {
 
 const About = () => {
   return (
-    <Card sx={{  boxShadow: 20, maxWidth: 345, margin: 'auto' }}>
+    <Card sx={{  boxShadow: 20, maxWidth: 600, margin: 'auto' }}>
       <CardMedia
         component="img"
-        height="300"
         image={me.imageUrl}
         alt={`${me.name}'s picture`}
       />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+      <CardContent sx={{ margin: 'auto'  }}>
+        <Typography  gutterBottom variant="h5" component="div">
           {me.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {me.description}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions sx={{ margin: 'auto', marginTop: 'auto' }}>
         <Link href={me.linkedinUrl} target="_blank" rel="noopener">
+        More About Me
           <IconButton aria-label="LinkedIn">
             <LinkedInIcon />
           </IconButton>
         </Link>
         <Link href={me.githubUrl} target="_blank" rel="noopener">
+        Source Code
           <IconButton aria-label="GitHub">
-          <GitHubIcon />
+          <GitHubIcon /> 
           </IconButton>
         </Link>
       </CardActions>

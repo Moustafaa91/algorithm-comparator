@@ -1,33 +1,17 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useDemoRouter } from "@toolpad/core/internal";
-import {
-  PageContainer,
-  PageHeader,
-  PageHeaderToolbar,
-} from "@toolpad/core/PageContainer";
-import { AppProvider } from "@toolpad/core/AppProvider";
-import { LocalizationProvider } from "@mui/x-date-pickers-pro/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { Sort, Info, FindReplace } from "@mui/icons-material";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import dayjs from "dayjs";
-import { useTheme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import SortingAlgorithms from "./SortingAlgorithms";
 import SearchingAlgorithms from "./SearchingAlgorithms";
 import About from "./About";
 
 function HomePage() {
-  const NAVIGATION = [
-    { segment: "", title: "Home" },
-    { segment: "orders", title: "Orders" },
-  ];
-  const router = useDemoRouter();
-  const theme = useTheme();
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {

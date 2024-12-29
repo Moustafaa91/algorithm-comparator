@@ -16,7 +16,7 @@ function InputSizeSelector({ selectedSize, onSelect }) {
 
   return (
     <div>
-      <label htmlFor="input-size">Select Input Size:</label>
+      <p><strong>Select Input Size</strong></p>
       <select
         id="input-size"
         value={selectedSize}
