@@ -1,29 +1,30 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { useDemoRouter } from '@toolpad/core/internal';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { useDemoRouter } from "@toolpad/core/internal";
 import {
   PageContainer,
   PageHeader,
   PageHeaderToolbar,
-} from '@toolpad/core/PageContainer';
-import { AppProvider } from '@toolpad/core/AppProvider';
-import { LocalizationProvider } from '@mui/x-date-pickers-pro/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import { Sort,Info,FindReplace } from '@mui/icons-material';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import dayjs from 'dayjs';
-import { useTheme } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import SortingAlgorithms from './SortingAlgorithms';
+} from "@toolpad/core/PageContainer";
+import { AppProvider } from "@toolpad/core/AppProvider";
+import { LocalizationProvider } from "@mui/x-date-pickers-pro/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import { Sort, Info, FindReplace } from "@mui/icons-material";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import dayjs from "dayjs";
+import { useTheme } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
+import SortingAlgorithms from "./SortingAlgorithms";
+import SearchingAlgorithms from "./SearchingAlgorithms";
+import About from "./About";
 
 function HomePage() {
-
   const NAVIGATION = [
-    { segment: '', title: 'Home' },
-    { segment: 'orders', title: 'Orders' },
+    { segment: "", title: "Home" },
+    { segment: "orders", title: "Orders" },
   ];
   const router = useDemoRouter();
   const theme = useTheme();
@@ -34,7 +35,7 @@ function HomePage() {
   };
   function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
-  
+
     return (
       <div
         role="tabpanel"
@@ -47,43 +48,60 @@ function HomePage() {
       </div>
     );
   }
-  
+
   CustomTabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.number.isRequired,
     value: PropTypes.number.isRequired,
   };
-  
-  function a11yProps(index) {
+
+  function tabProps(index) {
     return {
       id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
+      "aria-controls": `simple-tabpanel-${index}`,
     };
   }
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab icon={<Sort />} iconPosition="start" label="Sorting Algorithms" {...a11yProps(0)} />
-          <Tab icon={<FindReplace />} iconPosition="start" label="Searching Algorithms" {...a11yProps(1)} />
-          <Tab icon={<Info />} iconPosition="start" label="About" {...a11yProps(2)} />
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          <Tab
+            icon={<Sort />}
+            iconPosition="start"
+            label="Sorting Algorithms"
+            {...tabProps(0)}
+          />
+          <Tab
+            icon={<FindReplace />}
+            iconPosition="start"
+            label="Searching Algorithms"
+            {...tabProps(1)}
+          />
+          <Tab
+            icon={<Info />}
+            iconPosition="start"
+            label="About"
+            {...tabProps(2)}
+          />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-      <Paper sx={{ width: '90%', margin: 'auto', marginTop: '20px' }}>
-            <SortingAlgorithms />
+        <Paper sx={{ width: "90%", margin: "auto", marginTop: "20px" }}>
+          <SortingAlgorithms />
         </Paper>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <SearchingAlgorithms />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        <About />
       </CustomTabPanel>
-        
-        </Box>
-    
+    </Box>
   );
 }
 
