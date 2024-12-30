@@ -14,6 +14,7 @@ import { ClipLoader } from 'react-spinners';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { PlayCircle } from "@mui/icons-material";
+import Snackbar from '@mui/material/Snackbar';
 
 function SortingAlgorithms() {
   const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);
@@ -24,6 +25,7 @@ function SortingAlgorithms() {
   const [generationTime, setGenerationTime] = useState(0);
   const [generatedArray, setGeneratedArray] = useState([]);
   const [sortedArray, setSortedArray] = useState([]); // Store the sorted array
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
   const generateInputArray = () => {
     switch (inputType) {
@@ -36,9 +38,18 @@ function SortingAlgorithms() {
     }
   };
 
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
+
   const handleRun = () => {
     if (selectedAlgorithms.length === 0) {
-      alert('Please select at least one algorithm.');
+      setOpenSnackbar(true);
       return;
     }
 
@@ -80,6 +91,13 @@ return (
             <Button startIcon={<PlayCircle />} variant="contained" onClick={handleRun} disabled={loading} style={{ height: '50px' }}>
                     {loading ? 'Running...' : 'Run'}
             </Button >
+            <Snackbar
+              open={openSnackbar}
+              autoHideDuration={800}
+              onClose={handleCloseSnackbar}
+              message="Please select at least one algorithm."
+              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      />
             </div>
             </Box>
        

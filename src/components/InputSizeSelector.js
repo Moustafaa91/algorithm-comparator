@@ -1,4 +1,9 @@
 import React from 'react';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 function InputSizeSelector({ selectedSize, onSelect }) {
   const sizes = [
@@ -15,20 +20,24 @@ function InputSizeSelector({ selectedSize, onSelect }) {
   ];
 
   return (
-    <div>
-      <p><strong>Select Input Size</strong></p>
-      <select
-        id="input-size"
-        value={selectedSize}
-        onChange={(e) => onSelect(Number(e.target.value))}
-      >
-        {sizes.map((size) => (
-          <option key={size.value} value={size.value}>
-            {size.label}
-          </option>
-        ))}
-      </select>
-    </div>
+    <Box sx={{ minWidth: 120 }}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Input Size</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={selectedSize}
+          label="Input size"
+          onChange={(e) => onSelect(Number(e.target.value))}
+        >
+           {sizes.map((size) => (
+            <MenuItem key={size.value} value={size.value}> {size.label} </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
+    </Box>
+
+    
   );
 }
 

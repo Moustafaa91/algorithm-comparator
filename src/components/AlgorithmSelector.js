@@ -1,6 +1,7 @@
 import React from 'react';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
 
 function AlgorithmSelector({ selectedAlgorithms, onSelect }) {
@@ -14,8 +15,8 @@ function AlgorithmSelector({ selectedAlgorithms, onSelect }) {
   };
 
   return (
-    <div >
-      <p><strong>Select Algorithm(s)</strong></p>
+    <FormGroup >
+      <FormLabel component="legend">Select Algorithm(s)</FormLabel>
       <FormGroup row style={{ marginRight: '-100px' }}>
         {algorithms.map((algo, index) => (
             <FormControlLabel
@@ -28,7 +29,7 @@ function AlgorithmSelector({ selectedAlgorithms, onSelect }) {
             />
         ))}
       </FormGroup>
-    </div>
+    </FormGroup>
   );
 }
 
