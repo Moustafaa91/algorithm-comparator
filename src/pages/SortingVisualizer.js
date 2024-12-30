@@ -3,6 +3,7 @@ import AlgorithmSelector from '../components/AlgorithmSelector';
 import { algorithmsVisual } from '../algorithms';
 import "./SortingVisualizer.css";
 import Box from '@mui/material/Box';
+import Snackbar from '@mui/material/Snackbar';
 
 const SortingVisualizer = () => {
   const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);
@@ -13,11 +14,18 @@ const SortingVisualizer = () => {
   const [speed, setSpeed] = useState(100); // Animation speed
   const [size, setSize] = useState(10); // Array size
   const [isSorting, setIsSorting] = useState(false); // Is sorting in progress
-
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [alertMessage, setAlertMessage] = React.useState();
   // Generate a random array
   const generateArray = () => {
-    if (speed < 0 || speed > 1000 || size < 0 || size > 100) {
-      alert("Speed must be between 0 and 1000 ms. and Array size must be between 0 and 100");
+    if (speed < 0 || speed > 1000) {
+      setOpenSnackbar(true);
+      setAlertMessage("Speed must be between 0 and 1000 ms.");
+      return;
+    }
+    if (size < 0 || size > 100) {
+      setOpenSnackbar(true);
+      setAlertMessage("Array size must be between 0 and 100");
       return;
     }
     const newArray = Array.from({ length: size }, () => Math.floor(Math.random() * 100) + 1);
@@ -28,10 +36,29 @@ const SortingVisualizer = () => {
     setIsSorting(false); // Sorting hasn't started yet
   };
 
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
+
   // Start sorting visualization
   const startSorting = () => {
-    if (speed < 0 || speed > 1000 || size < 0 || size > 100) {
-      alert("Speed must be between 0 and 1000 ms. and Array size must be between 0 and 100");
+    if (selectedAlgorithms.length === 0) {
+      setOpenSnackbar(true);
+      setAlertMessage("Please select an algorithm to start sorting");
+      return;
+    }
+    if (speed < 0 || speed > 1000) {
+      setOpenSnackbar(true);
+      setAlertMessage("Speed must be between 0 and 1000 ms.");
+      return;
+    }
+    if (size < 0 || size > 100) {
+      setOpenSnackbar(true);
+      setAlertMessage("Array size must be between 0 and 100");
       return;
     }
     const sortingSteps = algorithmsVisual[selectedAlgorithms[0]](array);
@@ -95,6 +122,13 @@ const SortingVisualizer = () => {
       <button onClick={() => { setArray([]); setSteps([]); setIsSorting(false); setIsPaused(false); }}>
         Refresh
       </button>
+      <Snackbar
+                    open={openSnackbar}
+                    autoHideDuration={1000}
+                    onClose={handleCloseSnackbar}
+                    message={alertMessage}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            />
       </div>
       </Box>
       <div className="array-container">
