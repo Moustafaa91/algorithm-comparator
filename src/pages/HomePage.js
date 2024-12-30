@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { Sort, Info, FindReplace } from "@mui/icons-material";
+import { Sort, Info, AlignVerticalBottom } from "@mui/icons-material";
 import dayjs from "dayjs";
 import Paper from "@mui/material/Paper";
 import SortingAlgorithms from "./SortingAlgorithms";
-import SearchingAlgorithms from "./SearchingAlgorithms";
+import SortingVisualizer from "./SortingVisualizer";
 import About from "./About";
+import { algorithms } from '../algorithms';
+
 
 function HomePage() {
 
@@ -57,13 +59,13 @@ function HomePage() {
           <Tab
             icon={<Sort />}
             iconPosition="start"
-            label="Sorting Algorithms"
+            label="Sorting Algorithms Comparison"
             {...tabProps(0)}
           />
           <Tab
-            icon={<FindReplace />}
+            icon={<AlignVerticalBottom />}
             iconPosition="start"
-            label="Searching Algorithms"
+            label="Sorting Algorithms Visualizing"
             {...tabProps(1)}
           />
           <Tab
@@ -80,7 +82,9 @@ function HomePage() {
         </Paper>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <SearchingAlgorithms />
+      <Paper sx={{ width: "90%", margin: "auto", marginTop: "20px" }}>
+        <SortingVisualizer algorithm={algorithms.QuickSortWithSteps} />
+        </Paper>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <About />
