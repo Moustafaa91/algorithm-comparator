@@ -11,13 +11,16 @@ import { quickSortWithSteps } from './QuickSortWithSteps';
 
 export const algorithms = {
   QuickSort: quickSort,
-  QuickSortWithSteps: quickSortWithSteps,
   BubbleSort: bubbleSort,
-  BubbleSortWithSteps: bubbleSortWithSteps,
   MergeSort: mergeSort,
-  MergeSortWithSteps: mergeSortWithSteps,
   SelectionSort: selectionSort,
   InsertionSort: insertionSort,
   HeapSort: heapSort,
   CycleSort: cycleSort,
+};
+
+export const algorithmsVisual = {
+  QuickSortWithSteps: quickSortWithSteps,
+  BubbleSortWithSteps: bubbleSortWithSteps,
+  MergeSortWithSteps: mergeSortWithSteps,
 };

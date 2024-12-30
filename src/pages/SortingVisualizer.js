@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+import AlgorithmSelector from '../components/AlgorithmSelector';
+import { algorithmsVisual } from '../algorithms';
 import "./SortingVisualizer.css";
+import Box from '@mui/material/Box';
 
-const SortingVisualizer = ({ algorithm }) => {
+const SortingVisualizer = () => {
+  const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);
   const [array, setArray] = useState([]);
   const [steps, setSteps] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
@@ -30,7 +34,7 @@ const SortingVisualizer = ({ algorithm }) => {
       alert("Speed must be between 0 and 1000 ms. and Array size must be between 0 and 100");
       return;
     }
-    const sortingSteps = algorithm(array);
+    const sortingSteps = algorithmsVisual[selectedAlgorithms[0]](array);
     setSteps(sortingSteps);
     setCurrentStep(0);
     setIsPaused(false);
@@ -60,8 +64,11 @@ const SortingVisualizer = ({ algorithm }) => {
   const comparedIndices = steps[currentStep]?.compared || [];
 
   return (
-    <div className="sorting-visualizer">
-      <div className="controls">
+    
+    <Box sx={{ width: '90%' }}>
+    <Box sx={{ borderBottom: 1, borderColor: 'black' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', gap: '30px', alignItems: 'center' }}>
+      <AlgorithmSelector selectedAlgorithms={selectedAlgorithms} onSelect={setSelectedAlgorithms} isVisual={true} />
         <label>
           Array Size:
           <input
@@ -89,6 +96,7 @@ const SortingVisualizer = ({ algorithm }) => {
         Refresh
       </button>
       </div>
+      </Box>
       <div className="array-container">
         {currentArray.map((value, index) => (
           <div
@@ -98,7 +106,8 @@ const SortingVisualizer = ({ algorithm }) => {
           ></div>
         ))}
       </div>
-    </div>
+      </Box>
+    
   );
 };
 

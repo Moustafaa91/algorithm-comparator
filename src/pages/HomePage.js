@@ -9,7 +9,6 @@ import Paper from "@mui/material/Paper";
 import SortingAlgorithms from "./SortingAlgorithms";
 import SortingVisualizer from "./SortingVisualizer";
 import About from "./About";
-import { algorithms } from '../algorithms';
 
 
 function HomePage() {
@@ -83,7 +82,7 @@ function HomePage() {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
       <Paper sx={{ width: "90%", margin: "auto", marginTop: "20px" }}>
-        <SortingVisualizer algorithm={algorithms.QuickSortWithSteps} />
+        <SortingVisualizer />
         </Paper>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>

@@ -84,7 +84,7 @@ return (
     <Box sx={{ width: '90%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'black' }}>
         <div style={{ display: 'flex', flexDirection: 'row', gap: '30px', alignItems: 'center' }}>
-            <AlgorithmSelector selectedAlgorithms={selectedAlgorithms} onSelect={setSelectedAlgorithms} />
+            <AlgorithmSelector selectedAlgorithms={selectedAlgorithms} onSelect={setSelectedAlgorithms} isVisual={false} />
             <InputSizeSelector selectedSize={selectedSize} onSelect={setSelectedSize} />
             <SortingTypes inputType={inputType} onSelect={setInputType} />
             
