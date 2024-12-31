@@ -7,7 +7,7 @@ import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { PlayArrow,  Pause, Refresh } from "@mui/icons-material";
+import { PlayArrow, Pause, Refresh } from "@mui/icons-material";
 
 const SortingVisualizer = () => {
   const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);
@@ -20,6 +20,8 @@ const SortingVisualizer = () => {
   const [isSorting, setIsSorting] = useState(false); // Is sorting in progress
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [alertMessage, setAlertMessage] = React.useState();
+  const [isDisabled, setIsDisabled] = useState(false); // Disabled state for radio buttons
+
   // Generate a random array
   const generateArray = () => {
     if (speed < 0 || speed > 1000) {
@@ -70,6 +72,7 @@ const SortingVisualizer = () => {
     setCurrentStep(0);
     setIsPaused(false);
     setIsSorting(true); // Sorting in progress
+    setIsDisabled(true); // Disable radio buttons
   };
 
   // Animate sorting steps
@@ -84,23 +87,32 @@ const SortingVisualizer = () => {
     // If sorting finishes, reset isSorting to false
     if (currentStep >= steps.length && steps.length > 0) {
       setArray(steps[steps.length - 1].array); // Set the final sorted state
+      setSteps([]); // Reset steps
       setIsSorting(false);
-  }
+      setIsPaused(false);
+      setIsDisabled(false); // Enable radio buttons
+    }
   }, [currentStep, steps, speed, isPaused, isSorting]);
 
   // Pause/Resume functionality
   const togglePause = () => setIsPaused((prev) => !prev);
 
+  const handleRefresh = () => {
+    setArray([]);
+    setSteps([]);
+    setIsSorting(false);
+    setIsPaused(false);
+    setIsDisabled(false); // Enable radio buttons
+  };
+
   const currentArray = steps[currentStep]?.array || array;
   const comparedIndices = steps[currentStep]?.compared || [];
 
   return (
-    
     <Box sx={{ width: '90%' }}>
-    <Box sx={{ display: 'flex', flexDirection: 'row', gap: '30px', alignItems: 'center', borderBottom: 1, borderColor: 'black' }}>
-      
-      <AlgorithmSelector selectedAlgorithms={selectedAlgorithms} onSelect={setSelectedAlgorithms} isVisual={true} />
-      <TextField
+      <Box sx={{ display: 'flex', flexDirection: 'row', gap: '30px', alignItems: 'center', borderBottom: 1, borderColor: 'black' }}>
+        <AlgorithmSelector selectedAlgorithms={selectedAlgorithms} onSelect={setSelectedAlgorithms} isVisual={true} disabled={isDisabled} />
+        <TextField
           id="outlined-number"
           label="Array Size"
           type="number"
@@ -125,29 +137,25 @@ const SortingVisualizer = () => {
             },
           }}
         />
-        <Button  onClick={generateArray} disabled={array.length !== 0} sx={{ textTransform: 'none', height: '50px', width: '250px'  }}>
+        <Button onClick={generateArray} disabled={isSorting && array.length !== 0} sx={{ textTransform: 'none', height: '50px', width: '250px' }}>
           Generate Array
         </Button>
-
-        <Button  onClick={startSorting} disabled={array.length === 0 || isSorting} sx={{  textTransform: 'none', height: '50px', width: '250px' }}>
-        Start Sorting
+        <Button onClick={startSorting} disabled={array.length === 0 || isSorting} sx={{ textTransform: 'none', height: '50px', width: '250px' }}>
+          Start Sorting
         </Button>
-        
         <IconButton color="primary" onClick={togglePause} disabled={!isSorting || currentStep >= steps.length}>
           {isPaused ? <PlayArrow /> : <Pause />}
         </IconButton>
-      <IconButton color="primary" onClick={() => { setArray([]); setSteps([]); setIsSorting(false); setIsPaused(false); }}>
-        <Refresh />
-      </IconButton >
-
-      <Snackbar
-                    open={openSnackbar}
-                    autoHideDuration={1000}
-                    onClose={handleCloseSnackbar}
-                    message={alertMessage}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            />
-
+        <IconButton color="primary" onClick={handleRefresh}>
+          <Refresh />
+        </IconButton>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={1000}
+          onClose={handleCloseSnackbar}
+          message={alertMessage}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        />
       </Box>
       <div className="array-container">
         {currentArray.map((value, index) => (
@@ -158,8 +166,7 @@ const SortingVisualizer = () => {
           ></div>
         ))}
       </div>
-      </Box>
-    
+    </Box>
   );
 };
 

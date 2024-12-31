@@ -7,7 +7,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import Typography from '@mui/material/Typography';
 
-function AlgorithmSelector({ selectedAlgorithms, onSelect, isVisual }) {
+function AlgorithmSelector({ selectedAlgorithms, onSelect, isVisual, disabled}) {
   const algorithms = [
     { label: 'Bubble Sort', key: 'BubbleSort' },
     { label: 'Quick Sort', key: 'QuickSort' },
@@ -27,7 +27,10 @@ function AlgorithmSelector({ selectedAlgorithms, onSelect, isVisual }) {
     { label: 'Selection Sort', key: 'SelectionSortWithSteps' },
     { label: 'Insertion Sort', key: 'InsertionSortWithSteps' },
     { label: 'Heap Sort', key: 'HeapSortWithSteps' },
-    { label: 'Cycle Sort', key: 'CycleSortWithSteps' }
+    { label: 'Cycle Sort', key: 'CycleSortWithSteps' },
+    { label: 'Shell Sort', key: 'ShellSortWithSteps' },
+    { label: 'Radix Sort', key: 'RadixSortWithSteps' },
+    { label: 'Bucket Sort', key: 'BucketSortWithSteps' }
   ];
 
   const handleChange = (e) => {
@@ -68,7 +71,7 @@ function AlgorithmSelector({ selectedAlgorithms, onSelect, isVisual }) {
               <FormControlLabel
                 key={index}
                 value={algo.key}
-                control={<Radio size="small" />}
+                control={<Radio size="small" disabled={disabled} />}
                 label={<Typography variant="body2">{algo.label}</Typography>}
               />
             ))}
