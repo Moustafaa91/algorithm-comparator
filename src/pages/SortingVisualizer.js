@@ -125,11 +125,11 @@ const SortingVisualizer = () => {
             },
           }}
         />
-        <Button  onClick={generateArray} disabled={array.length !== 0} style={{ height: '50px', width: '250px'  }}>
+        <Button  onClick={generateArray} disabled={array.length !== 0} sx={{ textTransform: 'none', height: '50px', width: '250px'  }}>
           Generate Array
         </Button>
 
-        <Button  onClick={startSorting} disabled={array.length === 0 || isSorting} style={{ height: '50px', width: '250px' }}>
+        <Button  onClick={startSorting} disabled={array.length === 0 || isSorting} sx={{  textTransform: 'none', height: '50px', width: '250px' }}>
         Start Sorting
         </Button>
         

@@ -26,6 +26,7 @@ function SortingAlgorithms() {
   const [generatedArray, setGeneratedArray] = useState([]);
   const [sortedArray, setSortedArray] = useState([]); // Store the sorted array
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [snackbarMessage, setSnackbarMessage] = React.useState("");
 
   const generateInputArray = () => {
     switch (inputType) {
@@ -48,38 +49,54 @@ function SortingAlgorithms() {
 
   const handleRun = () => {
     if (selectedAlgorithms.length === 0) {
+      setSnackbarMessage("Please select at least one algorithm.");
       setOpenSnackbar(true);
       return;
     }
 
+    // Clean up memory from previous run
+    setResults([]);
+    setGeneratedArray([]);
+    setSortedArray([]);
+    setGenerationTime(0);
+
     setLoading(true);
 
     setTimeout(() => {
-      const { array, portions, generationTime } =
-        generateInputArray(selectedSize);
-      setGeneratedArray(array);
+      try {
+        const { array, portions, generationTime } = generateInputArray(selectedSize);
+        setGeneratedArray(array);
 
-      // Restructure data to consolidate all algorithms
-      const newResults = Array.from(
-        { length: portions.length },
-        (_, index) => ({
-          inputSize: (index + 1) * (selectedSize / 10),
-        })
-      );
+        // Restructure data to consolidate all algorithms
+        const newResults = Array.from(
+          { length: portions.length },
+          (_, index) => ({
+            inputSize: (index + 1) * (selectedSize / 10),
+          })
+        );
 
-      selectedAlgorithms.forEach((algorithm) => {
-        const { sortedArray, times } = algorithms[algorithm](portions);
+        selectedAlgorithms.forEach((algorithm) => {
+          const { sortedArray, times } = algorithms[algorithm](portions);
 
-        times.forEach((time, index) => {
-          newResults[index][algorithm] = time; // Add algorithm times as separate keys
+          times.forEach((time, index) => {
+            newResults[index][algorithm] = time; // Add algorithm times as separate keys
+          });
+
+          setSortedArray(sortedArray); // Save the final sorted array for the last algorithm
         });
 
-        setSortedArray(sortedArray); // Save the final sorted array for the last algorithm
-      });
-
-      setResults(newResults);
-      setGenerationTime(generationTime); // Store generation time separately
-      setLoading(false);
+        setResults(newResults);
+        setGenerationTime(generationTime); // Store generation time separately
+      } catch (error) {
+        if (error instanceof RangeError && error.message.includes("Maximum call stack size exceeded")) {
+          setSnackbarMessage("Maximum call stack size exceeded. Please try a smaller input size.");
+          setOpenSnackbar(true);
+        } else {
+          console.error(error);
+        }
+      } finally {
+        setLoading(false);
+      }
     }, 100);
   };
 
@@ -109,7 +126,7 @@ function SortingAlgorithms() {
             variant="contained"
             onClick={handleRun}
             disabled={loading}
-            style={{ height: "50px" }}
+            style={{ width: "200px", height: "50px" }}
           >
             {loading ? "Running..." : "Run"}
           </Button>
@@ -117,7 +134,7 @@ function SortingAlgorithms() {
             open={openSnackbar}
             autoHideDuration={800}
             onClose={handleCloseSnackbar}
-            message="Please select at least one algorithm."
+            message={snackbarMessage}
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
           />
         </div>

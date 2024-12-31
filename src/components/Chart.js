@@ -58,6 +58,9 @@ function Chart({ data, generationTime }) {
                   InsertionSort: "#a83279",
                   HeapSort: "#17becf",
                   CycleSort: "#bcbd22",
+                  ShellSort: "#d62728",
+                  BucketSort: "#9467bd",
+                  RadixSort: "#8c564b",
                 }[algorithm] || "#000000" // Default color for new algorithms
               }
               name={algorithm}

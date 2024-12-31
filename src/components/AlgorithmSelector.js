@@ -5,6 +5,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
+import Typography from '@mui/material/Typography';
 
 function AlgorithmSelector({ selectedAlgorithms, onSelect, isVisual }) {
   const algorithms = [
@@ -38,18 +39,18 @@ function AlgorithmSelector({ selectedAlgorithms, onSelect, isVisual }) {
 
   return (
     <FormGroup>
-      {!isVisual ? (
-        <FormLabel component="legend">Select algorithm(s)</FormLabel>
-      ) : (
-      <FormLabel component="legend">Select one algorithm</FormLabel>
-      )}
+      <FormLabel component="legend">
+        <Typography variant="h6">
+          {!isVisual ? 'Select algorithm(s)' : 'Select one algorithm'}
+        </Typography>
+      </FormLabel>
       <FormGroup row style={{ marginRight: '-100px' }}>
         {!isVisual ? (
           algorithms.map((algo, index) => (
             <FormControlLabel
               key={index}
-              control={<Checkbox />}
-              label={algo.label}
+              control={<Checkbox size="small" />}
+              label={<Typography variant="body2">{algo.label}</Typography>}
               value={algo.key}
               checked={selectedAlgorithms.includes(algo.key)}
               onChange={handleChange}
@@ -67,8 +68,8 @@ function AlgorithmSelector({ selectedAlgorithms, onSelect, isVisual }) {
               <FormControlLabel
                 key={index}
                 value={algo.key}
-                control={<Radio />}
-                label={<span style={{ fontSize: '0.875rem' }}>{algo.label}</span>}
+                control={<Radio size="small" />}
+                label={<Typography variant="body2">{algo.label}</Typography>}
               />
             ))}
           </RadioGroup>

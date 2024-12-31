@@ -25,7 +25,7 @@ function ArrayDisplay({ title, array }) {
 
   return (
     <Box sx={{ marginBottom: 2, textAlign: 'center' }}>
-      <Typography variant="overline" gutterBottom>
+      <Typography sx={{ textTransform: 'none'}} variant="body1" gutterBottom>
         {title}
       </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
