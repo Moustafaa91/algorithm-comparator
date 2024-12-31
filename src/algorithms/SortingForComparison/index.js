@@ -5,9 +5,9 @@ import { selectionSort } from './SelectionSort';
 import { insertionSort } from './InsertionSort';
 import { heapSort } from './HeapSort';
 import { cycleSort } from './CycleSort';
-import { bubbleSortWithSteps } from './BubbleSortWithSteps';
-import { mergeSortWithSteps } from './MergeSortWithSteps';
-import { quickSortWithSteps } from './QuickSortWithSteps';
+import { bubbleSortWithSteps } from '../SortingForVisualization/BubbleSortWithSteps';
+import { mergeSortWithSteps } from '../SortingForVisualization/MergeSortWithSteps';
+import { quickSortWithSteps } from '../SortingForVisualization/QuickSortWithSteps';
 
 export const algorithms = {
   QuickSort: quickSort,
