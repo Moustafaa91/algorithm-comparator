@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AlgorithmSelector from '../components/AlgorithmSelector';
-import { algorithmsVisual } from '../algorithms/SortingForComparison';
+import { algorithmsVisual } from '../algorithms';
 import "./SortingVisualizer.css";
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';

@@ -4,7 +4,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { Sort, Info, AlignVerticalBottom } from "@mui/icons-material";
-import dayjs from "dayjs";
 import Paper from "@mui/material/Paper";
 import SortingAlgorithms from "./SortingAlgorithms";
 import SortingVisualizer from "./SortingVisualizer";
