@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import { NavigateNext, NavigateBefore } from '@mui/icons-material';
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 
 function ArrayDisplay({ title, array }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -19,51 +24,37 @@ function ArrayDisplay({ title, array }) {
   );
 
   return (
-    <div style={{ marginBottom: '20px', textAlign: 'center' }}>
-      <h3>{title}</h3>
-      <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
+    <Box sx={{ marginBottom: 2, textAlign: 'center' }}>
+      <Typography variant="overline" gutterBottom>
+        {title}
+      </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
         {currentPageItems.map((item, index) => (
-          <div key={index} style={{ padding: '5px 10px', margin: '1px', border: '1px solid #ccc', borderRadius: '4px' }}>
-            {item}
-          </div>
+          <Paper key={index} sx={{ padding: 1, margin: 0.2, borderRadius: 1 }}>
+            <Typography variant="overline" >{item}</Typography>
+          </Paper>
         ))}
-      </div>
-      <div style={{ marginTop: '10px' }}>
-        <button
+      </Box>
+      <Box sx={{ marginTop: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <IconButton
           onClick={handlePreviousPage}
           disabled={currentPage === 0}
-          style={{
-            padding: '10px 20px',
-            margin: '0 10px',
-            cursor: 'pointer',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '4px',
-          }}
+          color="primary"
         >
-          Previous
-        </button>
-        <span>
+          <NavigateBefore />
+        </IconButton>
+        <Typography variant="caption" sx={{ marginX: 2 }}>
           Page {currentPage + 1} of {totalPages}
-        </span>
-        <button
+        </Typography>
+        <IconButton
           onClick={handleNextPage}
           disabled={currentPage === totalPages - 1}
-          style={{
-            padding: '10px 20px',
-            margin: '0 10px',
-            cursor: 'pointer',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '4px',
-          }}
+          color="primary"
         >
-          Next
-        </button>
-      </div>
-    </div>
+          <NavigateNext />
+        </IconButton>
+      </Box>
+    </Box>
   );
 }
 

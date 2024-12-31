@@ -4,6 +4,10 @@ import { algorithmsVisual } from '../algorithms';
 import "./SortingVisualizer.css";
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import { PlayArrow,  Pause, Refresh } from "@mui/icons-material";
 
 const SortingVisualizer = () => {
   const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);
@@ -93,35 +97,49 @@ const SortingVisualizer = () => {
   return (
     
     <Box sx={{ width: '90%' }}>
-    <Box sx={{ borderBottom: 1, borderColor: 'black' }}>
-      <div style={{ display: 'flex', flexDirection: 'row', gap: '30px', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'row', gap: '30px', alignItems: 'center', borderBottom: 1, borderColor: 'black' }}>
+      
       <AlgorithmSelector selectedAlgorithms={selectedAlgorithms} onSelect={setSelectedAlgorithms} isVisual={true} />
-        <label>
-          Array Size:
-          <input
-            type="number"
-            value={size}
-            onChange={(e) => setSize(Number(e.target.value))}
-          />
-        </label>
-        <label>
-          Speed (ms):
-          <input
-            type="number"
-            value={speed}
-            onChange={(e) => setSpeed(Number(e.target.value))}
-          />
-        </label>
-        <button onClick={generateArray} disabled={array.length !== 0}>Generate Array</button>
-        <button onClick={startSorting} disabled={array.length === 0 || isSorting}>
-          Start Sorting
-        </button>
-        <button onClick={togglePause} disabled={!isSorting || currentStep >= steps.length}>
-          {isPaused ? "Resume" : "Pause"}
-        </button>
-      <button onClick={() => { setArray([]); setSteps([]); setIsSorting(false); setIsPaused(false); }}>
-        Refresh
-      </button>
+      <TextField
+          id="outlined-number"
+          label="Array Size"
+          type="number"
+          value={size}
+          onChange={(e) => setSize(Number(e.target.value))}
+          disabled={array.length !== 0}
+          slotProps={{
+            inputLabel: {
+              shrink: true,
+            },
+          }}
+        />
+        <TextField
+          id="outlined-number"
+          label="Speed (ms)"
+          type="number"
+          value={speed}
+          onChange={(e) => setSpeed(Number(e.target.value))}
+          slotProps={{
+            inputLabel: {
+              shrink: true,
+            },
+          }}
+        />
+        <Button  onClick={generateArray} disabled={array.length !== 0} style={{ height: '50px', width: '250px'  }}>
+          Generate Array
+        </Button>
+
+        <Button  onClick={startSorting} disabled={array.length === 0 || isSorting} style={{ height: '50px', width: '250px' }}>
+        Start Sorting
+        </Button>
+        
+        <IconButton color="primary" onClick={togglePause} disabled={!isSorting || currentStep >= steps.length}>
+          {isPaused ? <PlayArrow /> : <Pause />}
+        </IconButton>
+      <IconButton color="primary" onClick={() => { setArray([]); setSteps([]); setIsSorting(false); setIsPaused(false); }}>
+        <Refresh />
+      </IconButton >
+
       <Snackbar
                     open={openSnackbar}
                     autoHideDuration={1000}
@@ -129,7 +147,7 @@ const SortingVisualizer = () => {
                     message={alertMessage}
                     anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             />
-      </div>
+
       </Box>
       <div className="array-container">
         {currentArray.map((value, index) => (
