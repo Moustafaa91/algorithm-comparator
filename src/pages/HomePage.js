@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { Sort, Info, AlignVerticalBottom } from "@mui/icons-material";
+import { ShowChart, Info, InsertChart } from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
 import SortingAlgorithms from "./SortingAlgorithms";
 import SortingVisualizer from "./SortingVisualizer";
@@ -53,23 +53,28 @@ function HomePage() {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          centered
+          
         >
           <Tab
-            icon={<Sort />}
-            iconPosition="start"
+            icon={<ShowChart />}
+            iconPosition="top"
             label="Sorting Algorithms Comparison"
+            sx={{textTransform :"none"}}
             {...tabProps(0)}
           />
           <Tab
-            icon={<AlignVerticalBottom />}
-            iconPosition="start"
+            icon={<InsertChart />}
+            iconPosition="top"
             label="Sorting Algorithms Visualizing"
+            sx={{textTransform :"none"}}
             {...tabProps(1)}
           />
           <Tab
             icon={<Info />}
-            iconPosition="start"
+            iconPosition="top"
             label="About"
+            sx={{textTransform :"none"}}
             {...tabProps(2)}
           />
         </Tabs>
