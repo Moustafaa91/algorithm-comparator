@@ -12,6 +12,9 @@ import { heapSortWithSteps } from './SortingForVisualization/HeapSortWithSteps';
 import { insertionSortWithSteps } from './SortingForVisualization/InsertionSortWithSteps';
 import { selectionSortWithSteps } from './SortingForVisualization/SelectionSortWithSteps';
 import { cycleSortWithSteps } from './SortingForVisualization/CycleSortWithSteps';
+import { shellSort } from './SortingForComparison/ShellSort';
+import { radixSort } from './SortingForComparison/RadixSort';
+import { bucketSort } from './SortingForComparison/BucketSort';
 
 export const algorithms = {
   QuickSort: quickSort,
@@ -21,6 +24,9 @@ export const algorithms = {
   InsertionSort: insertionSort,
   HeapSort: heapSort,
   CycleSort: cycleSort,
+  ShellSort: shellSort,
+  RadixSort: radixSort,
+  BucketSort: bucketSort,
 };
 
 export const algorithmsVisual = {

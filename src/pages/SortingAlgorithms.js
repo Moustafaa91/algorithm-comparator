@@ -103,7 +103,7 @@ function SortingAlgorithms() {
             selectedSize={selectedSize}
             onSelect={setSelectedSize}
           />
-          <SortingTypes inputType={inputType} onSelect={setInputType} />|
+          <SortingTypes inputType={inputType} onSelect={setInputType} />
           <Button
             startIcon={<PlayCircle />}
             variant="contained"

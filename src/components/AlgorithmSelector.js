@@ -14,7 +14,10 @@ function AlgorithmSelector({ selectedAlgorithms, onSelect, isVisual }) {
     { label: 'Selection Sort', key: 'SelectionSort' },
     { label: 'Insertion Sort', key: 'InsertionSort' },
     { label: 'Heap Sort', key: 'HeapSort' },
-    { label: 'Cycle Sort', key: 'CycleSort' }
+    { label: 'Cycle Sort', key: 'CycleSort' },
+    { label: 'Shell Sort', key: 'ShellSort' },
+    { label: 'Radix Sort', key: 'RadixSort' },
+    { label: 'Bucket Sort', key: 'BucketSort' }
   ];
   const algorithmsVisual = [
     { label: 'Bubble Sort', key: 'BubbleSortWithSteps' }, 
