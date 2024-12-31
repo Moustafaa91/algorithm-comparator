@@ -8,6 +8,10 @@ import { cycleSort } from './SortingForComparison/CycleSort';
 import { bubbleSortWithSteps } from './SortingForVisualization/BubbleSortWithSteps';
 import { mergeSortWithSteps } from './SortingForVisualization/MergeSortWithSteps';
 import { quickSortWithSteps } from './SortingForVisualization/QuickSortWithSteps';
+import { heapSortWithSteps } from './SortingForVisualization/HeapSortWithSteps';
+import { insertionSortWithSteps } from './SortingForVisualization/InsertionSortWithSteps';
+import { selectionSortWithSteps } from './SortingForVisualization/SelectionSortWithSteps';
+import { cycleSortWithSteps } from './SortingForVisualization/CycleSortWithSteps';
 
 export const algorithms = {
   QuickSort: quickSort,
@@ -23,4 +27,8 @@ export const algorithmsVisual = {
   QuickSortWithSteps: quickSortWithSteps,
   BubbleSortWithSteps: bubbleSortWithSteps,
   MergeSortWithSteps: mergeSortWithSteps,
+  SelectionSortWithSteps: selectionSortWithSteps,
+  InsertionSortWithSteps: insertionSortWithSteps,
+  HeapSortWithSteps: heapSortWithSteps,
+  CycleSortWithSteps: cycleSortWithSteps,
 };

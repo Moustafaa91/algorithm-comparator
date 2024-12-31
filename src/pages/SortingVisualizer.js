@@ -136,7 +136,7 @@ const SortingVisualizer = () => {
           <div
             key={index}
             className={`array-bar ${comparedIndices.includes(index) ? "highlight" : ""}`}
-            style={{ height: `${value}px`, width: `${800 / size}px` }}
+            style={{ height: `${value}px`, width: `${1000 / size}px` }}
           ></div>
         ))}
       </div>
