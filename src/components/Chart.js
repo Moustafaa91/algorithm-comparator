@@ -1,4 +1,5 @@
 import React from 'react';
+import Typography from '@mui/material/Typography';
 
 import {
   LineChart,
@@ -14,7 +15,9 @@ import {
 
 function Chart({ data, generationTime }) {
   if (!data.length) {
-    return <p>No data to display. Run an algorithm to see results.</p>;
+    return (
+      <Typography variant="body2"> No data to display. Run an algorithm to see results.</Typography> 
+    );
   }
 
   // Extract algorithm names dynamically
@@ -22,7 +25,9 @@ function Chart({ data, generationTime }) {
 
   return (
     <>
-      <p>Data Generation Time: <strong>{generationTime.toFixed(2)} ms</strong></p>
+      <Typography variant="body2"> Data Generation Time: 
+        <strong>{generationTime.toFixed(2)} ms</strong>
+      </Typography>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
           <XAxis dataKey="inputSize">
