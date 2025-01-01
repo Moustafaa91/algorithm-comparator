@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, {  useState, useEffect, useRef } from "react";
 import TextField from "@mui/material/TextField";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Slider from '@mui/material/Slider';
-import Snackbar from '@mui/material/Snackbar';
-import { PlayArrow, Pause, Refresh } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Slider from "@mui/material/Slider";
+import Snackbar from "@mui/material/Snackbar";
+import { Pause, Refresh } from "@mui/icons-material";
 import { searchingAlgorithms } from "../algorithms";
-import AlgorithmSelector from '../components/AlgorithmSelector';
+import AlgorithmSelector from "../components/AlgorithmSelector";
+import "./SearchVisualizer.css"; // Import CSS file for styling
 
 const SearchVisualizer = () => {
   const [array, setArray] = useState([]);
-  const [target, setTarget] = useState(null);
+  const [target, setTarget] = useState(0);
   const [algorithm, setAlgorithm] = useState("LinearSearch");
   const [currentIndex, setCurrentIndex] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
@@ -22,6 +23,7 @@ const SearchVisualizer = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);
+  const pausedRef = useRef(false);
 
   // Generate a random or sorted array
   const generateArray = () => {
@@ -30,9 +32,10 @@ const SearchVisualizer = () => {
       setAlertMessage("Array size must be between 1 and 100");
       return;
     }
-    const newArray = algorithm === "BinarySearch"
-      ? Array.from({ length: size }, (_, i) => i + 1) // Sorted array
-      : Array.from({ length: size }, () => Math.floor(Math.random() * 100));
+    const newArray =
+      algorithm === "BinarySearch"
+        ? Array.from({ length: size }, (_, i) => i + 1) // Sorted array
+        : Array.from({ length: size }, () => Math.floor(Math.random() * 100));
     setArray(newArray);
     setCurrentIndex(null);
     setFound(false);
@@ -40,13 +43,15 @@ const SearchVisualizer = () => {
 
     if (algorithm === "BinarySearch") {
       setOpenSnackbar(true);
-      setAlertMessage("Binary Search requires a sorted array. A sorted array has been generated.");
+      setAlertMessage(
+        "Binary Search requires a sorted array. A sorted array has been generated."
+      );
     }
   };
 
   // Start Search
   const startSearch = async () => {
-    if (target === null) {
+    if (target === null || target === 0) {
       setOpenSnackbar(true);
       setAlertMessage("Please enter a target value to start searching");
       return;
@@ -55,38 +60,71 @@ const SearchVisualizer = () => {
     setFound(false);
     setCurrentIndex(null);
 
-    await searchingAlgorithms[algorithm](array, target, setCurrentIndex, setFound, speed);
+    pausedRef.current = false;
+
+    await searchingAlgorithms[algorithm](
+      array,
+      target,
+      setCurrentIndex,
+      setFound,
+      speed,
+      pausedRef
+    );
 
     setIsSearching(false);
   };
 
-  // Pause Search (reset current index)
+  // Pause Search
   const pauseSearch = () => {
+    pausedRef.current = true;
     setIsSearching(false);
   };
 
   const handleCloseSnackbar = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setOpenSnackbar(false);
   };
 
   return (
-    <Box sx={{ width: '90%', margin: 'auto', textAlign: 'center' }}>
-      <Typography variant="h4" gutterBottom>
-        Search Algorithm Visualization
-      </Typography>
-      <AlgorithmSelector selectedAlgorithms={selectedAlgorithms} onSelect={setSelectedAlgorithms} isVisual={true} disabled={true}  />
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
-        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center' }}>
+    <Box sx={{ width: "90%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1px",
+          alignItems: "left",
+        }}
+      >
+        <AlgorithmSelector
+          selectedAlgorithms={selectedAlgorithms}
+          onSelect={setSelectedAlgorithms}
+          isVisual={true}
+          disabled={true}
+          algorithmsType="searching"
+        />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            gap: "10px",
+            alignItems: "center",
+            marginTop: "-50px",
+            marginBottom: "10px",
+          }}
+        >
           <TextField
             id="outlined-number"
-            label="Array Size (1-100)"
+            label="Array Size"
             type="number"
             value={size}
+            helperText="min 1, max 100"
             onChange={(e) => {
-              const newSize = Math.max(1, Math.min(100, Number(e.target.value))); // Clamp to 1-100
+              const newSize = Math.max(
+                1,
+                Math.min(100, Number(e.target.value))
+              ); // Clamp to 1-100
               setSize(newSize);
             }}
             inputProps={{
@@ -99,78 +137,78 @@ const SearchVisualizer = () => {
               },
             }}
           />
-          <Button onClick={generateArray} disabled={isSearching} sx={{ textTransform: 'none', height: '50px', width: '150px' }}>
-            Generate Array
-          </Button>
+
           <TextField
-            id="target-value"
+            id="outlined-number"
             label="Target Value"
             type="number"
-            placeholder="Enter target"
-            value={target || ""}
+            value={target}
+            helperText="Value to search"
             onChange={(e) => setTarget(Number(e.target.value))}
-            sx={{ width: '150px' }}
+            sx={{ width: "150px" }}
           />
-          <TextField
-            select
-            label="Algorithm"
-            value={algorithm}
-            onChange={(e) => setAlgorithm(e.target.value)}
-            SelectProps={{
-              native: true,
-            }}
-            sx={{ width: '150px' }}
-          >
-            <option value="LinearSearch">Linear Search</option>
-            <option value="BinarySearch">Binary Search</option>
-            <option value="JumpSearch">Jump Search</option>
-          </TextField>
-          <Button onClick={startSearch} disabled={isSearching || target === null} sx={{ textTransform: 'none', height: '50px', width: '150px' }}>
-            Start
-          </Button>
-          <IconButton color="primary" onClick={pauseSearch} disabled={!isSearching}>
-            <Pause />
-          </IconButton>
-          <IconButton color="primary" onClick={generateArray}>
-            <Refresh />
-          </IconButton>
-        </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', marginTop: '20px' }}>
+
           <Typography variant="caption" id="input-slider" gutterBottom>
             Speed (ms)
           </Typography>
           <Slider
             value={speed}
             onChange={(e, newValue) => setSpeed(newValue)}
-            min={100}
-            max={2000}
-            step={100}
+            min={1}
+            max={1000}
             valueLabelDisplay="auto"
-            sx={{ width: '200px' }}
+            sx={{ width: "200px" }}
           />
+          <Button
+            onClick={generateArray}
+            disabled={isSearching}
+            sx={{ textTransform: "none", height: "50px", width: "150px" }}
+          >
+            Generate Array
+          </Button>
+          <Button
+            onClick={startSearch}
+            disabled={isSearching || target === 0}
+            sx={{ textTransform: "none", height: "50px", width: "150px" }}
+          >
+            Start
+          </Button>
+          <IconButton
+            color="primary"
+            onClick={pauseSearch}
+            disabled={!isSearching}
+          >
+            <Pause />
+          </IconButton>
+          <IconButton color="primary" onClick={generateArray}>
+            <Refresh />
+          </IconButton>
         </Box>
         <Snackbar
           open={openSnackbar}
           autoHideDuration={3000}
           onClose={handleCloseSnackbar}
           message={alertMessage}
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
         />
       </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+
+      <Box 
+      sx={{
+        display: "flex",
+        flexDirection: "row",      
+        marginTop: "-50px",
+        marginBottom: "10px",
+        alignContent: "center",
+        gap: "10px",
+      }}
+      className="array-container">
         {array.map((value, index) => (
           <Box
             key={index}
-            sx={{
-              width: '30px',
-              height: '30px',
-              margin: '5px',
-              backgroundColor: index === currentIndex ? (found ? 'green' : 'yellow') : 'lightgray',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: '1px solid black',
-            }}
+            className={`array-element ${
+              index === currentIndex ? (found ? "found" : "current") : ""
+            }`}
           >
             {value}
           </Box>

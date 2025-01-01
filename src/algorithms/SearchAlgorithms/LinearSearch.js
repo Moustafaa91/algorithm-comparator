@@ -1,12 +1,21 @@
-export const linearSearch = async (array, target, setCurrentIndex, setFound, speed) => {
-    for (let i = 0; i < array.length; i++) {
-      setCurrentIndex(i);
-      await new Promise((resolve) => setTimeout(resolve, speed));
-      if (array[i] === target) {
-        setFound(true);
-        return;
-      }
+export const linearSearch = async (
+  array,
+  target,
+  setCurrentIndex,
+  setFound,
+  speed,
+  pausedRef
+) => {
+  for (let i = 0; i < array.length; i++) {
+    while (pausedRef.current) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
-    setFound(false); // If no match is found
-  };
-  
+    setCurrentIndex(i);
+    await new Promise((resolve) => setTimeout(resolve, speed));
+    if (array[i] === target) {
+      setFound(true);
+      return;
+    }
+  }
+  setFound(false);
+};

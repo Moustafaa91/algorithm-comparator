@@ -22,6 +22,7 @@ function SortingTypes({ inputType, onSelect }) {
           value="random"
           control={<Radio size="small" />}
           label={<Typography variant="body2">Random - (Average case)</Typography>}
+          sx={{marginTop: '-10px'}}
         />
         <FormControlLabel
           onChange={(e) => onSelect(e.target.value)}
@@ -29,6 +30,7 @@ function SortingTypes({ inputType, onSelect }) {
           value="sorted"
           control={<Radio size="small" />}
           label={<Typography variant="body2">Sorted - (Best case)</Typography>}
+          sx={{marginTop: '-10px'}}
         />
         <FormControlLabel
           onChange={(e) => onSelect(e.target.value)}
@@ -36,6 +38,7 @@ function SortingTypes({ inputType, onSelect }) {
           value="reverse-sorted"
           control={<Radio size="small" />}
           label={<Typography variant="body2">Reverse Sorted - (Worst case)</Typography>}
+          sx={{marginTop: '-10px'}}
         />
       </RadioGroup>
     </FormControl>

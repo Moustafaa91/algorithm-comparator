@@ -120,11 +120,12 @@ const SortingVisualizer = () => {
           <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', marginTop: '-50px' }}>
             <TextField
               id="outlined-number"
-              label="Array Size (max 100)"
+              label="Array Size"
               type="number"
               value={size}
               onChange={(e) => setSize(Number(e.target.value))}
               disabled={array.length !== 0}
+              helperText="min 1, max 100"
               inputProps={{
                 min: 1, 
                 max: 100, 
@@ -171,7 +172,6 @@ const SortingVisualizer = () => {
             <IconButton color="primary" onClick={handleRefresh}>
               <Refresh />
             </IconButton>
-          </Box>
 
           <Snackbar
             open={openSnackbar}
@@ -179,6 +179,7 @@ const SortingVisualizer = () => {
             onClose={handleCloseSnackbar}
             message={alertMessage}
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }} />
+            </Box>
         </Box>
 
         <div className="array-container">

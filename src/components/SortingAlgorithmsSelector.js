@@ -1,7 +1,6 @@
 import React from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -48,7 +47,7 @@ function SortingAlgorithmsSelector({
   };
 
   return (
-    <FormGroup row style={{ marginRight: "-100px" }}>
+    <FormGroup row style={{ marginRight: "-100px", marginTop: "-5px" }}>
       {!isVisual ? (
         sortingAlgorithms.map((algo, index) => (
           <FormControlLabel

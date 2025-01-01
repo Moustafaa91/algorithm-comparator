@@ -102,7 +102,7 @@ function SortingAlgorithms() {
 
   return (
     <Box sx={{ width: "90%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "black" }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
         <div
           style={{
             display: "flex",
