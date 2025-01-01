@@ -27,14 +27,14 @@ const SortingVisualizer = () => {
 
   // Generate a random array
   const generateArray = () => {
-    if (speed < 0 || speed > 1000) {
+    if (speed < 1 || speed > 1000) {
       setOpenSnackbar(true);
-      setAlertMessage("Speed must be between 0 and 1000 ms.");
+      setAlertMessage("Speed must be between 1 and 1000 ms.");
       return;
     }
-    if (size < 0 || size > 100) {
+    if (size < 1 || size > 100) {
       setOpenSnackbar(true);
-      setAlertMessage("Array size must be between 0 and 100");
+      setAlertMessage("Array size must be between 1 and 100");
       return;
     }
     const newArray = Array.from({ length: size }, () => Math.floor(Math.random() * 100) + 1);
@@ -60,14 +60,14 @@ const SortingVisualizer = () => {
       setAlertMessage("Please select an algorithm to start sorting");
       return;
     }
-    if (speed < 0 || speed > 1000) {
+    if (speed < 1 || speed > 1000) {
       setOpenSnackbar(true);
-      setAlertMessage("Speed must be between 0 and 1000 ms.");
+      setAlertMessage("Speed must be between 1 and 1000 ms.");
       return;
     }
-    if (size < 0 || size > 100) {
+    if (size < 1 || size > 100) {
       setOpenSnackbar(true);
-      setAlertMessage("Array size must be between 0 and 100");
+      setAlertMessage("Array size must be between 1 and 100");
       return;
     }
     const sortingSteps = sortingAlgorithmsVisual[selectedAlgorithms[0]](array);
@@ -120,16 +120,21 @@ const SortingVisualizer = () => {
           <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', marginTop: '-50px' }}>
             <TextField
               id="outlined-number"
-              label="Array Size"
+              label="Array Size (max 100)"
               type="number"
               value={size}
               onChange={(e) => setSize(Number(e.target.value))}
               disabled={array.length !== 0}
+              inputProps={{
+                min: 1, 
+                max: 100, 
+              }}
               slotProps={{
                 inputLabel: {
                   shrink: true,
                 },
-              }} />
+              }} 
+              />
             
             <Typography variant="caption" id="input-slider" gutterBottom>
               Speed (ms)
