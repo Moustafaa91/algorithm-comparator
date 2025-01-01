@@ -115,7 +115,7 @@ const SortingVisualizer = () => {
     <>
       <Box sx={{ width: '90%' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
-          <AlgorithmSelector selectedAlgorithms={selectedAlgorithms} onSelect={setSelectedAlgorithms} isVisual={true} disabled={isDisabled} />
+        <AlgorithmSelector selectedAlgorithms={selectedAlgorithms} onSelect={setSelectedAlgorithms} isVisual={true} disabled={isDisabled} algorithmsType={'sorting'} />
           
           <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', marginTop: '-50px' }}>
             <TextField
@@ -142,7 +142,7 @@ const SortingVisualizer = () => {
             <Slider
               value={speed}
               onChange={(e, newValue) => setSpeed(newValue)}
-              min={0}
+              min={1}
               max={1000}
               valueLabelDisplay="auto"
               type="number"
@@ -154,7 +154,7 @@ const SortingVisualizer = () => {
               onChange={(e, newValue) => setSpeed(newValue)}
               inputProps={{
                 step: 10,
-                min: 0,
+                min: 1,
                 max: 1000,
                 type: 'number',
                 'aria-labelledby': 'input-slider',

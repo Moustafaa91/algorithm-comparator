@@ -116,6 +116,7 @@ function SortingAlgorithms() {
             onSelect={setSelectedAlgorithms}
             isVisual={false}
             disabled={false}
+            algorithmsType="sorting"
           />
           <InputSizeSelector
             selectedSize={selectedSize}
