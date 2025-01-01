@@ -32,7 +32,7 @@ function AlgorithmSelector({
           selectedAlgorithms={selectedAlgorithms}
           onSelect={onSelect}
           isVisual={isVisual}
-          disabled={false}
+          disabled={disabled}
         />
       ) : (
         <label>Invalid algorithm type</label>

@@ -21,13 +21,15 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    margin-top: 0px;
+    margin-top: auto;
   }
   
   .array-element {
     width: 30px;
     height: 30px;
     margin: 1px;
+    margin-bottom: auto;
+    margin-top: auto;
     display: flex;
     align-items: center;
     background-color: transparent;

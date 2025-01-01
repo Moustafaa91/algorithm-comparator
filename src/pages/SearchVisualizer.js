@@ -1,4 +1,4 @@
-import React, {  useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Slider from "@mui/material/Slider";
 import Snackbar from "@mui/material/Snackbar";
-import { Pause, Refresh } from "@mui/icons-material";
+import { PlayArrow, Pause, Refresh } from "@mui/icons-material";
 import { searchingAlgorithms } from "../algorithms";
 import AlgorithmSelector from "../components/AlgorithmSelector";
 import "./SearchVisualizer.css"; // Import CSS file for styling
@@ -14,7 +14,6 @@ import "./SearchVisualizer.css"; // Import CSS file for styling
 const SearchVisualizer = () => {
   const [array, setArray] = useState([]);
   const [target, setTarget] = useState(0);
-  const [algorithm, setAlgorithm] = useState("LinearSearch");
   const [currentIndex, setCurrentIndex] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
   const [speed, setSpeed] = useState(500); // Default speed: 500ms
@@ -23,62 +22,72 @@ const SearchVisualizer = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);
-  const pausedRef = useRef(false);
+  const [isPaused, setIsPaused] = useState(false); // Pause state
+  const stepIndexRef = useRef(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const [steps, setSteps] = useState([]);
+
+  const sortingRequiredAlgorithms = ["BinarySearch", "JumpSearch"];
 
   // Generate a random or sorted array
   const generateArray = () => {
-    if (size < 1 || size > 100) {
-      setOpenSnackbar(true);
-      setAlertMessage("Array size must be between 1 and 100");
-      return;
-    }
-    const newArray =
-      algorithm === "BinarySearch"
-        ? Array.from({ length: size }, (_, i) => i + 1) // Sorted array
-        : Array.from({ length: size }, () => Math.floor(Math.random() * 100));
+    const newArray = sortingRequiredAlgorithms.includes(selectedAlgorithms[0])
+      ? Array.from({ length: size }, (_, i) => i + 1) // Sorted array
+      : Array.from({ length: size }, () => Math.floor(Math.random() * 1000));
     setArray(newArray);
     setCurrentIndex(null);
     setFound(false);
-    setIsSearching(false);
-
-    if (algorithm === "BinarySearch") {
-      setOpenSnackbar(true);
-      setAlertMessage(
-        "Binary Search requires a sorted array. A sorted array has been generated."
-      );
-    }
+    setSteps([]);
   };
 
-  // Start Search
-  const startSearch = async () => {
-    if (target === null || target === 0) {
+  // Pause/Resume functionality
+  const togglePause = () => setIsPaused((prev) => !prev);
+
+  const startVisualization = () => {
+    if (selectedAlgorithms.length === 0) {
       setOpenSnackbar(true);
-      setAlertMessage("Please enter a target value to start searching");
+      setAlertMessage("Please select an algorithm to start sorting");
       return;
     }
+    const steps = searchingAlgorithms[selectedAlgorithms](array, target);
+    setSteps(steps);
+    setIsRunning(true);
+    setIsPaused(false);
     setIsSearching(true);
     setFound(false);
-    setCurrentIndex(null);
-
-    pausedRef.current = false;
-
-    await searchingAlgorithms[algorithm](
-      array,
-      target,
-      setCurrentIndex,
-      setFound,
-      speed,
-      pausedRef
-    );
-
-    setIsSearching(false);
+    stepIndexRef.current = 0;
   };
 
-  // Pause Search
-  const pauseSearch = () => {
-    pausedRef.current = true;
-    setIsSearching(false);
-  };
+  useEffect(() => {
+    if (isRunning && steps.length > 0 && !isPaused) {
+      const interval = setInterval(() => {
+        const step = steps[stepIndexRef.current];
+        setCurrentIndex(step.currentIndex);
+        setFound(step.found || found); // Maintain found state
+  
+        if (stepIndexRef.current === steps.length - 1) {
+          clearInterval(interval);
+          setIsRunning(false);
+          setIsSearching(false);
+          if (step.found) {
+            setFound(true); // Ensure highlight remains if found
+          }
+        } else {
+          stepIndexRef.current += 1;
+        }
+      }, speed);
+  
+      return () => clearInterval(interval);
+    }
+  }, [isRunning, steps, speed, isPaused, found]);
+  
+
+  // Effect to sort the array if selectedAlgorithm requires sorting
+  useEffect(() => {
+    if (sortingRequiredAlgorithms.includes(selectedAlgorithms[0])) {
+      setArray((prevArray) => [...prevArray].sort((a, b) => a - b));
+    }
+  }, [selectedAlgorithms, sortingRequiredAlgorithms]);
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === "clickaway") {
@@ -100,18 +109,23 @@ const SearchVisualizer = () => {
         <AlgorithmSelector
           selectedAlgorithms={selectedAlgorithms}
           onSelect={setSelectedAlgorithms}
-          isVisual={true}
-          disabled={true}
+          disabled={isSearching}
           algorithmsType="searching"
         />
+        {sortingRequiredAlgorithms.includes(selectedAlgorithms[0]) && (
+          <Typography color="warning"  variant="caption" gutterBottom>
+            This algorithm requires a sorted array
+          </Typography>
+        )}
+        
         <Box
           sx={{
             display: "flex",
             flexDirection: "row",
             gap: "10px",
             alignItems: "center",
-            marginTop: "-50px",
-            marginBottom: "10px",
+            marginTop: "40px",
+            marginBottom: "40px",
           }}
         >
           <TextField
@@ -119,17 +133,17 @@ const SearchVisualizer = () => {
             label="Array Size"
             type="number"
             value={size}
-            helperText="min 1, max 100"
+            helperText="min 1, max 300"
             onChange={(e) => {
               const newSize = Math.max(
                 1,
-                Math.min(100, Number(e.target.value))
-              ); // Clamp to 1-100
+                Math.min(300, Number(e.target.value))
+              );
               setSize(newSize);
             }}
             inputProps={{
               min: 1,
-              max: 100,
+              max: 300,
             }}
             slotProps={{
               inputLabel: {
@@ -167,18 +181,14 @@ const SearchVisualizer = () => {
             Generate Array
           </Button>
           <Button
-            onClick={startSearch}
-            disabled={isSearching || target === 0}
+            onClick={startVisualization}
+            disabled={isSearching}
             sx={{ textTransform: "none", height: "50px", width: "150px" }}
           >
             Start
           </Button>
-          <IconButton
-            color="primary"
-            onClick={pauseSearch}
-            disabled={!isSearching}
-          >
-            <Pause />
+          <IconButton color="primary" onClick={togglePause} disabled={!isSearching}>
+            {isPaused ? <PlayArrow /> : <Pause />}
           </IconButton>
           <IconButton color="primary" onClick={generateArray}>
             <Refresh />
@@ -197,10 +207,10 @@ const SearchVisualizer = () => {
       sx={{
         display: "flex",
         flexDirection: "row",      
-        marginTop: "-50px",
+        marginTop: "-10px",
         marginBottom: "10px",
         alignContent: "center",
-        gap: "10px",
+        gap: "5px",
       }}
       className="array-container">
         {array.map((value, index) => (

@@ -88,19 +88,19 @@ function HomePage() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Paper sx={{ width: "90%", margin: "auto", marginTop: "20px" }}>
+        <Box sx={{ bgcolor: "white", width: "100%", margin: "auto", marginTop: "20px", boxShadow: 6  }}>
           <SortingAlgorithms />
-        </Paper>
+        </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-      <Paper sx={{ width: "90%", margin: "auto", marginTop: "20px" }}>
+      <Box sx={{ bgcolor: "white", width: "100%", margin: "auto", marginTop: "20px", boxShadow: 6  }}>
         <SortingVisualizer />
-        </Paper>
+        </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-      <Paper sx={{ width: "90%", margin: "auto", marginTop: "20px" }}>
+      <Box sx={{ bgcolor: "white", width: "100%", margin: "auto", marginTop: "20px", boxShadow: 6  }}>
         <SearchVisualizer />
-        </Paper>
+        </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
         <About />

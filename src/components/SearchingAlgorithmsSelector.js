@@ -9,7 +9,6 @@ import Typography from "@mui/material/Typography";
 function SearchingAlgorithmsSelector({
   selectedAlgorithms,
   onSelect,
-  isVisual,
   disabled,
 }) {
   const searchingAlgorithms = [
@@ -29,13 +28,13 @@ function SearchingAlgorithmsSelector({
   };
 
   return (
-    <FormGroup row style={{ marginRight: "-100px" }}>
+    <FormGroup row sx={{ marginRight: "-100px" }}>
       <RadioGroup
           name="controlled-radio-buttons-group"
           value={selectedAlgorithms[0] || ""}
           onChange={(e) => onSelect([e.target.value])}
           row
-          style={{ marginLeft: "20px" }}
+          sx={{ marginLeft: "20px", marginTop: "-20px", marginBottom: "-20px" }}
         >
           {searchingAlgorithms.map((algo, index) => (
             <FormControlLabel
