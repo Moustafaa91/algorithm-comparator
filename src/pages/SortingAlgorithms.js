@@ -9,7 +9,7 @@ import {
   generateSortedArray,
   generateReverseSortedArray,
 } from "../utils/dataGenerator";
-import { algorithms } from "../algorithms";
+import { sortingAlgorithms } from "../algorithms";
 import { ClipLoader } from "react-spinners";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -76,7 +76,7 @@ function SortingAlgorithms() {
         );
 
         selectedAlgorithms.forEach((algorithm) => {
-          const { sortedArray, times } = algorithms[algorithm](portions);
+          const { sortedArray, times } = sortingAlgorithms[algorithm](portions);
 
           times.forEach((time, index) => {
             newResults[index][algorithm] = time; // Add algorithm times as separate keys

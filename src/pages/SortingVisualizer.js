@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AlgorithmSelector from '../components/AlgorithmSelector';
-import { algorithmsVisual } from '../algorithms';
+import { sortingAlgorithmsVisual } from '../algorithms';
 import "./SortingVisualizer.css";
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
@@ -67,7 +67,7 @@ const SortingVisualizer = () => {
       setAlertMessage("Array size must be between 0 and 100");
       return;
     }
-    const sortingSteps = algorithmsVisual[selectedAlgorithms[0]](array);
+    const sortingSteps = sortingAlgorithmsVisual[selectedAlgorithms[0]](array);
     setSteps(sortingSteps);
     setCurrentStep(0);
     setIsPaused(false);

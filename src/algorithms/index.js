@@ -20,8 +20,11 @@ import { shellSortWithSteps } from './SortingForVisualization/ShellSortWithSteps
 import { radixSortWithSteps } from './SortingForVisualization/RadixSortWithSteps';
 import { bucketSortWithSteps } from './SortingForVisualization/BucketSortWithSteps';
 
+import { linearSearch } from './SearchAlgorithms/LinearSearch';
+import { binarySearch } from './SearchAlgorithms/BinarySearch';
+import { jumpSearch } from './SearchAlgorithms/JumpSearch';
 
-export const algorithms = {
+export const sortingAlgorithms = {
   QuickSort: quickSort,
   BubbleSort: bubbleSort,
   MergeSort: mergeSort,
@@ -34,7 +37,7 @@ export const algorithms = {
   BucketSort: bucketSort,
 };
 
-export const algorithmsVisual = {
+export const sortingAlgorithmsVisual = {
   QuickSortWithSteps: quickSortWithSteps,
   BubbleSortWithSteps: bubbleSortWithSteps,
   MergeSortWithSteps: mergeSortWithSteps,
@@ -45,4 +48,10 @@ export const algorithmsVisual = {
   ShellSortWithSteps: shellSortWithSteps,
   RadixSortWithSteps: radixSortWithSteps,
   BucketSortWithSteps: bucketSortWithSteps,
+};
+
+export const searchingAlgorithms = {
+  LinearSearch: linearSearch,
+  BinarySearch: binarySearch,
+  JumpSearch: jumpSearch,
 };

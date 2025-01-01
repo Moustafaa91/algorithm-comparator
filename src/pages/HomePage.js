@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { ShowChart, Info, InsertChart } from "@mui/icons-material";
+import { ShowChart, Info, InsertChart, Troubleshoot } from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
 import SortingAlgorithms from "./SortingAlgorithms";
 import SortingVisualizer from "./SortingVisualizer";
+import SearchVisualizer from "./SearchVisualizer";
 import About from "./About";
 
 
@@ -71,11 +72,18 @@ function HomePage() {
             {...tabProps(1)}
           />
           <Tab
+            icon={<Troubleshoot />}
+            iconPosition="top"
+            label="Search Algorithms Visualizing"
+            sx={{textTransform :"none"}}
+            {...tabProps(2)}
+          />
+          <Tab
             icon={<Info />}
             iconPosition="top"
             label="About"
             sx={{textTransform :"none"}}
-            {...tabProps(2)}
+            {...tabProps(3)}
           />
         </Tabs>
       </Box>
@@ -90,6 +98,11 @@ function HomePage() {
         </Paper>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
+      <Paper sx={{ width: "90%", margin: "auto", marginTop: "20px" }}>
+        <SearchVisualizer />
+        </Paper>
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
         <About />
       </CustomTabPanel>
     </Box>

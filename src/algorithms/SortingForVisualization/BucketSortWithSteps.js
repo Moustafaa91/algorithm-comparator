@@ -1,12 +1,16 @@
 export function bucketSortWithSteps(array) {
     const steps = [];
     const arr = [...array];
-    const buckets = Array.from({ length: 10 }, () => []);
+    const bucketCount = 10;
+    const buckets = Array.from({ length: bucketCount }, () => []);
     const max = Math.max(...arr);
     const divisor = max / buckets.length;
   
     for (let i = 0; i < arr.length; i++) {
-      const bucketIndex = Math.floor(arr[i] / divisor);
+      const bucketIndex = Math.min(
+        bucketCount - 1,
+        Math.floor(arr[i] / divisor)
+      ); // Ensure index is within bounds
       steps.push({ array: [...arr], compared: [i, bucketIndex] });
       buckets[bucketIndex].push(arr[i]);
     }
