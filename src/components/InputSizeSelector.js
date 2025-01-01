@@ -16,7 +16,6 @@ function InputSizeSelector({ selectedSize, onSelect }) {
     { value: 1000000, label: '1m' },
     { value: 5000000, label: '5m' },
     { value: 10000000, label: '10m' },
-    { value: 20000000, label: '20m' },
   ];
 
   return (
@@ -33,6 +32,7 @@ function InputSizeSelector({ selectedSize, onSelect }) {
            {sizes.map((size) => (
             <MenuItem key={size.value} value={size.value}> {size.label} </MenuItem>
             ))}
+
         </Select>
       </FormControl>
     </Box>

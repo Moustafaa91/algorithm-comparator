@@ -7,7 +7,10 @@ import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { PlayArrow, Pause, Refresh } from "@mui/icons-material";
+import Typography from '@mui/material/Typography';
+import Input from '@mui/material/Input';
+import { PlayArrow, Pause, Refresh, Speed} from "@mui/icons-material";
+import Slider from '@mui/material/Slider';
 
 const SortingVisualizer = () => {
   const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);
@@ -109,64 +112,81 @@ const SortingVisualizer = () => {
   const comparedIndices = steps[currentStep]?.compared || [];
 
   return (
-    <Box sx={{ width: '90%' }}>
-      <Box sx={{ display: 'flex', flexDirection: 'row', gap: '30px', alignItems: 'center', borderBottom: 1, borderColor: 'black' }}>
-        <AlgorithmSelector selectedAlgorithms={selectedAlgorithms} onSelect={setSelectedAlgorithms} isVisual={true} disabled={isDisabled} />
-        <TextField
-          id="outlined-number"
-          label="Array Size"
-          type="number"
-          value={size}
-          onChange={(e) => setSize(Number(e.target.value))}
-          disabled={array.length !== 0}
-          slotProps={{
-            inputLabel: {
-              shrink: true,
-            },
-          }}
-        />
-        <TextField
-          id="outlined-number"
-          label="Speed (ms)"
-          type="number"
-          value={speed}
-          onChange={(e) => setSpeed(Number(e.target.value))}
-          slotProps={{
-            inputLabel: {
-              shrink: true,
-            },
-          }}
-        />
-        <Button onClick={generateArray} disabled={isSorting && array.length !== 0} sx={{ textTransform: 'none', height: '50px', width: '250px' }}>
-          Generate Array
-        </Button>
-        <Button onClick={startSorting} disabled={array.length === 0 || isSorting} sx={{ textTransform: 'none', height: '50px', width: '250px' }}>
-          Start Sorting
-        </Button>
-        <IconButton color="primary" onClick={togglePause} disabled={!isSorting || currentStep >= steps.length}>
-          {isPaused ? <PlayArrow /> : <Pause />}
-        </IconButton>
-        <IconButton color="primary" onClick={handleRefresh}>
-          <Refresh />
-        </IconButton>
-        <Snackbar
-          open={openSnackbar}
-          autoHideDuration={1000}
-          onClose={handleCloseSnackbar}
-          message={alertMessage}
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        />
+    <>
+      <Box sx={{ width: '90%' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
+          <AlgorithmSelector selectedAlgorithms={selectedAlgorithms} onSelect={setSelectedAlgorithms} isVisual={true} disabled={isDisabled} />
+          
+          <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', marginTop: '-50px' }}>
+            <TextField
+              id="outlined-number"
+              label="Array Size"
+              type="number"
+              value={size}
+              onChange={(e) => setSize(Number(e.target.value))}
+              disabled={array.length !== 0}
+              slotProps={{
+                inputLabel: {
+                  shrink: true,
+                },
+              }} />
+            
+            <Typography variant="caption" id="input-slider" gutterBottom>
+              Speed (ms)
+            </Typography>
+            <Slider
+              value={speed}
+              onChange={(e, newValue) => setSpeed(newValue)}
+              min={0}
+              max={1000}
+              valueLabelDisplay="auto"
+              type="number"
+              sx={{ width: '200px' }}
+            />
+            <Input
+              value={speed}
+              size="small"
+              onChange={(e, newValue) => setSpeed(newValue)}
+              inputProps={{
+                step: 10,
+                min: 0,
+                max: 1000,
+                type: 'number',
+                'aria-labelledby': 'input-slider',
+              }} />
+            <Button onClick={generateArray} disabled={isSorting && array.length !== 0} sx={{ textTransform: 'none', height: '50px', width: '150px' }}>
+              Generate Array
+            </Button>
+            <Button onClick={startSorting} disabled={array.length === 0 || isSorting} sx={{ textTransform: 'none', height: '50px', width: '150px' }}>
+              Start Sorting
+            </Button>
+            <IconButton color="primary" onClick={togglePause} disabled={!isSorting || currentStep >= steps.length}>
+              {isPaused ? <PlayArrow /> : <Pause />}
+            </IconButton>
+            <IconButton color="primary" onClick={handleRefresh}>
+              <Refresh />
+            </IconButton>
+          </Box>
+
+          <Snackbar
+            open={openSnackbar}
+            autoHideDuration={1000}
+            onClose={handleCloseSnackbar}
+            message={alertMessage}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }} />
+        </Box>
+
+        <div className="array-container">
+          {currentArray.map((value, index) => (
+            <div
+              key={index}
+              className={`array-bar ${comparedIndices.includes(index) ? "highlight" : ""}`}
+              style={{ height: `${value}px`, width: `${1000 / size}px` }}
+            ></div>
+          ))}
+        </div>
       </Box>
-      <div className="array-container">
-        {currentArray.map((value, index) => (
-          <div
-            key={index}
-            className={`array-bar ${comparedIndices.includes(index) ? "highlight" : ""}`}
-            style={{ height: `${value}px`, width: `${1000 / size}px` }}
-          ></div>
-        ))}
-      </div>
-    </Box>
+    </>
   );
 };
 
