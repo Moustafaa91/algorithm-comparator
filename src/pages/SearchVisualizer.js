@@ -145,7 +145,7 @@ const SearchVisualizer = () => {
             label="Array Size"
             type="number"
             value={size}
-            helperText="min 1, max 300"
+            helperText="min 1, max 1000"
             onChange={(e) => {
               const newSize = Math.max(
                 1,
