@@ -1,13 +1,14 @@
 export function jumpSearch(array, target) {
   const steps = [];
   const n = array.length;
-  const step = Math.floor(Math.sqrt(n)); // Optimal step size is √n
+  const stepSize = Math.floor(Math.sqrt(n)); // Optimal step size is √n
+  let step = stepSize; // Initialize step
   let prev = 0;
 
   while (prev < n) {
     steps.push({ array: [...array], currentIndex: prev }); // Log step
 
-    // If target is in the current block
+    // If target is within the current block
     if (array[Math.min(step, n) - 1] >= target) {
       for (let i = prev; i < Math.min(step, n); i++) {
         steps.push({ array: [...array], currentIndex: i }); // Log each comparison
@@ -19,7 +20,11 @@ export function jumpSearch(array, target) {
       break;
     }
 
+    // Move to the next block
     prev = step;
+    step += stepSize;
+
+    // Prevent infinite loop by checking bounds
     if (prev >= n) break;
   }
 
