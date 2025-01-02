@@ -23,6 +23,8 @@ import { bucketSortWithSteps } from './SortingForVisualization/BucketSortWithSte
 import { linearSearch } from './SearchAlgorithms/LinearSearch';
 import { binarySearch } from './SearchAlgorithms/BinarySearch';
 import { jumpSearch } from './SearchAlgorithms/JumpSearch';
+import { exponentialSearch } from './SearchAlgorithms/ExponentialSearch';
+import { ternarySearch } from './SearchAlgorithms/TernarySearch';
 
 export const sortingAlgorithms = {
   QuickSort: quickSort,
@@ -54,4 +56,6 @@ export const searchingAlgorithms = {
   LinearSearch: linearSearch,
   BinarySearch: binarySearch,
   JumpSearch: jumpSearch,
+  ExponentialSearch: exponentialSearch,
+  TernarySearch: ternarySearch
 };

@@ -15,6 +15,8 @@ function SearchingAlgorithmsSelector({
     { label: "Linear Search", key: "LinearSearch" },
     { label: "Binary Search", key: "BinarySearch" },
     { label: "Jump Search", key: "JumpSearch" },
+    { label: "Exponential Search", key: "ExponentialSearch" },
+    { label: "Ternary Search", key: "TernarySearch" },
 
   ];
   

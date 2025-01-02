@@ -1,47 +1,45 @@
 .search-visualizer {
-    width: 90%;
-    margin-top: auto;
-  }
-  
-  .controls {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  
-  .input-controls {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: center;
-  }
-  
-  .array-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: auto;
-  }
-  
-  .array-element {
-    width: 30px;
-    height: 30px;
-    margin: 1px;
-    margin-bottom: auto;
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-    justify-content: center;
-    border: 1px solid black;
-    transition: background-color 0.3s;
-  }
-  
-  .array-element.current {
-    background-color: yellow;
-  }
-  
-  .array-element.found {
-    background-color: green;
-  }
+  width: 90%;
+  margin: auto;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.input-controls {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.array-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.array-element {
+  width: 30px;
+  height: 30px;
+  margin: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1px solid black;
+  transition: background-color 0.3s;
+}
+
+.array-element.current {
+  background-color: yellow;
+}
+
+.array-element.found {
+  background-color: green;
+}
