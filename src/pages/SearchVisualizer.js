@@ -125,12 +125,6 @@ const SearchVisualizer = () => {
           disabled={isSearching}
           algorithmsType="searching"
         />
-        {sortingRequiredAlgorithms.includes(selectedAlgorithms[0]) && (
-          <Typography color="warning"  variant="caption" gutterBottom>
-            This algorithm requires a sorted array
-          </Typography>
-        )}
-        
         <Box
           sx={{
             display: "flex",

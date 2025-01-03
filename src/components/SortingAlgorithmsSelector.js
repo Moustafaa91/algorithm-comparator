@@ -5,6 +5,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 function SortingAlgorithmsSelector({
   selectedAlgorithms,
@@ -36,6 +37,29 @@ function SortingAlgorithmsSelector({
     { label: "Radix Sort", key: "RadixSortWithSteps" },
     { label: "Bucket Sort", key: "BucketSortWithSteps" },
   ];
+  
+  const algorithmDescriptions = {
+    BubbleSort: "Bubble Sort: O(n^2) - Best for learning sorting concepts, but highly inefficient for large datasets.",
+    QuickSort: "Quick Sort: O(n log n) on average - Excellent for large datasets due to its divide-and-conquer approach, but struggles with stability and can degrade to O(n^2) for already sorted or nearly sorted data without proper pivot selection.",
+    MergeSort: "Merge Sort: O(n log n) - Great for large datasets requiring stability, but requires additional memory for merging.",
+    SelectionSort: "Selection Sort: O(n^2) - Simple and memory-efficient but too slow for large datasets.",
+    InsertionSort: "Insertion Sort: O(n^2) - Performs well on small or nearly sorted datasets but is inefficient for large or random data.",
+    HeapSort: "Heap Sort: O(n log n) - Suitable for large datasets with memory constraints, but not stable and has slower constant factors compared to Quick Sort.",
+    CycleSort: "Cycle Sort: O(n^2) - Best for cases where minimal memory writes are needed, but impractical for general use due to inefficiency.",
+    ShellSort: "Shell Sort: O(n^(3/2)) on average - Good for medium-sized datasets, but performance heavily depends on the gap sequence chosen.",
+    RadixSort: "Radix Sort: O(nk) - Highly efficient for sorting integers with a small range, where k is the number of digits. Struggles with data requiring complex key transformations or non-integer data.",
+    BucketSort: "Bucket Sort: O(n + k) - Ideal for uniformly distributed data, where k is the number of buckets, but can degrade with skewed distributions or inappropriate bucket sizes.",
+  };
+  
+
+  const getCaptionText = () => {
+    if (!selectedAlgorithms.length) {
+      return "No algorithm selected.";
+    }
+    return selectedAlgorithms
+      .map((algo) => algorithmDescriptions[algo.replace("WithSteps", "")])
+      .join(" ");
+  };
 
   const handleChange = (e) => {
     const { value, checked } = e.target;
@@ -60,26 +84,30 @@ function SortingAlgorithmsSelector({
           />
         ))
       ) : (
-        <RadioGroup
-          name="controlled-radio-buttons-group"
-          value={selectedAlgorithms[0] || ""}
-          onChange={(e) => onSelect([e.target.value])}
-          row
-          style={{ marginLeft: "20px" }}
-        >
-          {sortingAlgorithmsVisual.map((algo, index) => (
-            <FormControlLabel
-              key={index}
-              value={algo.key}
-              control={<Radio size="small" disabled={disabled} />}
-              label={<Typography variant="body2">{algo.label}</Typography>}
-            />
-          ))}
-        </RadioGroup>
+        <Box>
+          <RadioGroup
+            name="controlled-radio-buttons-group"
+            value={selectedAlgorithms[0] || ""}
+            onChange={(e) => onSelect([e.target.value])}
+            row
+            style={{ marginLeft: "20px" }}
+          >
+            {sortingAlgorithmsVisual.map((algo, index) => (
+              <FormControlLabel
+                key={index}
+                value={algo.key}
+                control={<Radio size="small" disabled={disabled} />}
+                label={<Typography variant="body2">{algo.label}</Typography>}
+              />
+            ))}
+          </RadioGroup>
+          <Typography color="warning" variant="caption" gutterBottom sx={{ marginTop: 1 }}>
+            {getCaptionText()}
+          </Typography>
+        </Box>
       )}
     </FormGroup>
   );
 }
-
 
 export default SortingAlgorithmsSelector;
