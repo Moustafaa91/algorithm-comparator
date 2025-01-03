@@ -9,7 +9,6 @@ import {
   InsertChart,
   Troubleshoot,
 } from "@mui/icons-material";
-import Paper from "@mui/material/Paper";
 import SortingAlgorithms from "./SortingAlgorithms";
 import SortingVisualizer from "./SortingVisualizer";
 import SearchVisualizer from "./SearchVisualizer";
@@ -90,15 +89,7 @@ function HomePage() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Box
-          sx={{
-            bgcolor: "white",
-            width: "100%",
-            margin: "auto",
-            marginTop: "20px",
-            boxShadow: 6,
-          }}
-        >
+        <Box sx={{ bgcolor: "white", width: "100%", margin: "auto", marginTop: "20px", boxShadow: 6, }} >
           <SortingAlgorithms />
         </Box>
       </CustomTabPanel>

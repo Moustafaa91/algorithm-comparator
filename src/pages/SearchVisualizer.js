@@ -121,6 +121,7 @@ const SearchVisualizer = () => {
         <AlgorithmSelector
           selectedAlgorithms={selectedAlgorithms}
           onSelect={setSelectedAlgorithms}
+          isVisual={true}
           disabled={isSearching}
           algorithmsType="searching"
         />
