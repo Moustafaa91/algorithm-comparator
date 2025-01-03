@@ -32,12 +32,12 @@ const SortingVisualizer = () => {
       setAlertMessage("Speed must be between 1 and 1000 ms.");
       return;
     }
-    if (size < 1 || size > 100) {
+    if (size < 1 || size > 200) {
       setOpenSnackbar(true);
-      setAlertMessage("Array size must be between 1 and 100");
+      setAlertMessage("Array size must be between 1 and 200");
       return;
     }
-    const newArray = Array.from({ length: size }, () => Math.floor(Math.random() * 100) + 1);
+    const newArray = Array.from({ length: size }, () => Math.floor(Math.random() * 200) + 1);
     setArray(newArray);
     setSteps([]);
     setCurrentStep(0);
@@ -65,9 +65,9 @@ const SortingVisualizer = () => {
       setAlertMessage("Speed must be between 1 and 1000 ms.");
       return;
     }
-    if (size < 1 || size > 100) {
+    if (size < 1 || size > 200) {
       setOpenSnackbar(true);
-      setAlertMessage("Array size must be between 1 and 100");
+      setAlertMessage("Array size must be between 1 and 200");
       return;
     }
     const sortingSteps = sortingAlgorithmsVisual[selectedAlgorithms[0]](array);
@@ -125,10 +125,10 @@ const SortingVisualizer = () => {
               value={size}
               onChange={(e) => setSize(Number(e.target.value))}
               disabled={array.length !== 0}
-              helperText="min 1, max 100"
+              helperText="min 1, max 200"
               inputProps={{
                 min: 1, 
-                max: 100, 
+                max: 200, 
               }}
               slotProps={{
                 inputLabel: {
