@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Input from '@mui/material/Input';
-import { PlayArrow, Pause, Refresh, Speed} from "@mui/icons-material";
+import { PlayArrow, Pause, Refresh} from "@mui/icons-material";
 import Slider from '@mui/material/Slider';
 
 const SortingVisualizer = () => {

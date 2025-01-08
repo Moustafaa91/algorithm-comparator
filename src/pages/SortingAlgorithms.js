@@ -13,6 +13,8 @@ import { sortingAlgorithms } from "../algorithms";
 import { ClipLoader } from "react-spinners";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { PlayCircle } from "@mui/icons-material";
 import Snackbar from "@mui/material/Snackbar";
 
@@ -20,6 +22,7 @@ function SortingAlgorithms() {
   const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);
   const [selectedSize, setSelectedSize] = useState(10);
   const [inputType, setInputType] = useState("random");
+  const [onlyOneSorting, setOnlyOneSorting] = useState(false);
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [generationTime, setGenerationTime] = useState(0);
@@ -47,7 +50,7 @@ function SortingAlgorithms() {
     setOpenSnackbar(false);
   };
 
-  const handleRun = () => {
+  const handleRun = async () => {
     if (selectedAlgorithms.length === 0) {
       setSnackbarMessage("Please select at least one algorithm.");
       setOpenSnackbar(true);
@@ -62,9 +65,13 @@ function SortingAlgorithms() {
 
     setLoading(true);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       try {
-        const { array, portions, generationTime } = generateInputArray(selectedSize);
+        const { array, generationTime } = generateInputArray(selectedSize);
+        let portions = generateInputArray(selectedSize).portions;
+        if (onlyOneSorting) {
+          portions = [portions[portions.length - 1]];
+        }
         setGeneratedArray(array);
 
         // Restructure data to consolidate all algorithms
@@ -75,9 +82,17 @@ function SortingAlgorithms() {
           })
         );
 
-        selectedAlgorithms.forEach((algorithm) => {
-          const { sortedArray, times } = sortingAlgorithms[algorithm](portions);
+        // Run sorting algorithms in parallel
+        const sortingPromises = selectedAlgorithms.map((algorithm) =>
+          new Promise((resolve) => {
+            const { sortedArray, times } = sortingAlgorithms[algorithm](portions);
+            resolve({ algorithm, sortedArray, times });
+          })
+        );
 
+        const sortingResults = await Promise.all(sortingPromises);
+
+        sortingResults.forEach(({ algorithm, sortedArray, times }) => {
           times.forEach((time, index) => {
             newResults[index][algorithm] = time; // Add algorithm times as separate keys
           });
@@ -132,6 +147,10 @@ function SortingAlgorithms() {
           >
             {loading ? "Running..." : "Run"}
           </Button>
+          <FormControlLabel
+            control={<Checkbox checked={onlyOneSorting} onChange={() => setOnlyOneSorting(!onlyOneSorting)} />}
+            label="Show running time over only array size"
+          />
           <Snackbar
             open={openSnackbar}
             autoHideDuration={800}
@@ -147,7 +166,7 @@ function SortingAlgorithms() {
       ) : (
         <>
           <Box sx={{ borderBottom: 1, borderColor: "black" }}>
-            <Chart data={results} generationTime={generationTime} />
+            <Chart data={results} generationTime={generationTime} onlyOneSorting={onlyOneSorting} />
           </Box>
           <div style={{ display: "flex", gap: "20px" }}>
             <ArrayDisplay title="Generated Array" array={generatedArray} />
