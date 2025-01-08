@@ -125,16 +125,7 @@ const SearchVisualizer = () => {
           disabled={isSearching}
           algorithmsType="searching"
         />
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            gap: "10px",
-            alignItems: "center",
-            marginTop: "40px",
-            marginBottom: "40px",
-          }}
-        >
+        <Box sx={{ display: "flex", flexDirection: "row", gap: "10px", alignItems: "center", marginTop: "40px", marginBottom: "40px", }} >
           <TextField
             id="outlined-number"
             label="Array Size"

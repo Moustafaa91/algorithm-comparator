@@ -8,13 +8,16 @@ import {
   Info,
   InsertChart,
   Troubleshoot,
+  AccountTree
 } from "@mui/icons-material";
 import SortingAlgorithms from "./SortingAlgorithms";
 import SortingVisualizer from "./SortingVisualizer";
 import SearchVisualizer from "./SearchVisualizer";
+import GraphVisualizer from "./GraphVisualizer";
 import About from "./About";
 
 function HomePage() {
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -49,6 +52,8 @@ function HomePage() {
     };
   }
 
+  
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -68,23 +73,30 @@ function HomePage() {
           <Tab
             icon={<InsertChart />}
             iconPosition="top"
-            label="Sorting Algorithms Visualizing"
+            label="Sorting Algorithms Visualization"
             sx={{ textTransform: "none" }}
             {...tabProps(1)}
           />
           <Tab
             icon={<Troubleshoot />}
             iconPosition="top"
-            label="Search Algorithms Visualizing"
+            label="Search Algorithms Visualization"
             sx={{ textTransform: "none" }}
             {...tabProps(2)}
+          />
+          <Tab
+            icon={<AccountTree />}
+            iconPosition="top"
+            label="Graphs Visualization"
+            sx={{ textTransform: "none" }}
+            {...tabProps(3)}
           />
           <Tab
             icon={<Info />}
             iconPosition="top"
             label="About"
             sx={{ textTransform: "none" }}
-            {...tabProps(3)}
+            {...tabProps(4)}
           />
         </Tabs>
       </Box>
@@ -94,33 +106,21 @@ function HomePage() {
         </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <Box
-          sx={{
-            bgcolor: "white",
-            width: "100%",
-            margin: "auto",
-            marginTop: "20px",
-            boxShadow: 6,
-          }}
-        >
+        <Box sx={{ bgcolor: "white", width: "100%", margin: "auto", marginTop: "20px", boxShadow: 6 }}>
           <SortingVisualizer />
         </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <Box
-          sx={{
-            bgcolor: "white",
-            width: "100%",
-            margin: "auto",
-            marginTop: "20px",
-            boxShadow: 6,
-            paddingBottom: "20px", // Add padding for aesthetics
-          }}
-        >
+        <Box sx={{ bgcolor: "white", width: "100%", margin: "auto", marginTop: "20px", boxShadow: 6, paddingBottom: "20px" }} >
           <SearchVisualizer />
         </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
+      <Box sx={{ bgcolor: "white", width: "1600px", height:"700px", margin: "auto", marginTop: "20px", boxShadow: 6, paddingBottom: "20px" }} >
+        <GraphVisualizer />
+      </Box>
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={4}>
         <About />
       </CustomTabPanel>
     </Box>

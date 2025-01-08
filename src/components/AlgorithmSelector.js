@@ -4,6 +4,7 @@ import FormLabel from "@mui/material/FormLabel";
 import Typography from "@mui/material/Typography";
 import SortingAlgorithmsSelector from "./SortingAlgorithmsSelector";
 import SearchAlgorithmsSelector from "./SearchingAlgorithmsSelector";
+import GraphAlgorithmsSelector from "./GraphAlgorithmsSelector";
 
 function AlgorithmSelector({
   selectedAlgorithms,
@@ -34,6 +35,13 @@ function AlgorithmSelector({
           isVisual={isVisual}
           disabled={disabled}
         />
+       ) : algorithmsType === "graph" ? (
+          <GraphAlgorithmsSelector
+            selectedAlgorithms={selectedAlgorithms}
+            onSelect={onSelect}
+            isVisual={isVisual}
+            disabled={disabled}
+          />
       ) : (
         <label>Invalid algorithm type</label>
       )}

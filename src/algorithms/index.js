@@ -26,6 +26,8 @@ import { jumpSearch } from './SearchAlgorithms/JumpSearch';
 import { exponentialSearch } from './SearchAlgorithms/ExponentialSearch';
 import { ternarySearch } from './SearchAlgorithms/TernarySearch';
 
+import { BFS } from './Graphs/BFS';
+
 export const sortingAlgorithms = {
   QuickSort: quickSort,
   BubbleSort: bubbleSort,
@@ -58,4 +60,8 @@ export const searchingAlgorithms = {
   JumpSearch: jumpSearch,
   ExponentialSearch: exponentialSearch,
   TernarySearch: ternarySearch
+};
+
+export const graphAlgorithms = {
+  BFS: BFS,
 };
