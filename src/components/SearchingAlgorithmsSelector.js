@@ -36,15 +36,6 @@ function SearchingAlgorithmsSelector({
   };
   
   
-  const handleChange = (e) => {
-    const { value, checked } = e.target;
-    onSelect((prev) =>
-      checked
-        ? [...prev, value]
-        : prev.filter((algorithm) => algorithm !== value)
-    );
-  };
-
   return (
     <Box>
       <RadioGroup

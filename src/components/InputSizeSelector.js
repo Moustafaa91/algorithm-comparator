@@ -19,7 +19,7 @@ function InputSizeSelector({ selectedSize, onSelect }) {
   ];
 
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box sx={{ minWidth: 140 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Input Size</InputLabel>
         <Select
