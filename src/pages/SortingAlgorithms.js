@@ -11,13 +11,8 @@ import {
 } from "../utils/dataGenerator";
 import { sortingAlgorithms } from "../algorithms";
 import { ClipLoader } from "react-spinners";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Typography from "@mui/material/Typography";
+import { Box ,Button,Checkbox,FormControlLabel,Typography,Snackbar } from "@mui/material";
 import { PlayCircle, WarningAmber } from "@mui/icons-material";
-import Snackbar from "@mui/material/Snackbar";
 
 function SortingAlgorithms() {
   const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);

@@ -1,10 +1,5 @@
 import React from 'react';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Radio from '@mui/material/Radio';
-import Typography from '@mui/material/Typography';
+import { FormControl,FormLabel,RadioGroup,FormControlLabel,Radio,Typography } from '@mui/material';
 
 function SortingTypes({ inputType, onSelect }) {
   return (

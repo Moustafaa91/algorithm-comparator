@@ -1,29 +1,24 @@
-// GraphVisualizer.js
 import React, { useState, useEffect, useRef } from "react";
 import { useNodesState, useEdgesState } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import Graph from "../components/Graph";
-import { generateBFSGraph, generateDFSGraph} from "../utils/graphGenerator";
+import { graphGenerators } from "../utils/graphGenerator";
 import AlgorithmSelector from "../components/AlgorithmSelector";
 import { graphAlgorithms } from "../algorithms";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Slider from "@mui/material/Slider";
-import Snackbar from "@mui/material/Snackbar";
+import { Box, Button, IconButton, Typography, Slider, Snackbar, Select, MenuItem, InputLabel, FormControl} from "@mui/material";
 import { PlayArrow, Pause, Refresh } from "@mui/icons-material";
+
 
 const GraphVisualizer = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [steps, setSteps] = useState([]);
-  
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [isPaused, setIsPaused] = useState(false); // Pause state
   const [isRunning, setIsRunning] = useState(false);
   const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);
+  const [selectedGraphGenerator, setSelectedGraphGenerator] = useState("");
   const isPausedRef = useRef(isPaused);
 
   // Keep `isPausedRef` in sync with `isPaused`
@@ -62,7 +57,8 @@ const GraphVisualizer = () => {
       }
 
       // Apply the current step
-      const { visitedNodes } = steps[stepIndex];
+      const { visitedNodes, visitedEdges } = steps[stepIndex];
+      console.log(visitedNodes, visitedEdges);
 
       // Update node styles
       setNodes((prevNodes) =>
@@ -74,32 +70,35 @@ const GraphVisualizer = () => {
         }))
       );
 
+      // Update edge styles
+      setEdges((prevEdges) =>
+        prevEdges.map((edge) => ({
+          ...edge,
+          style: visitedEdges?.includes(edge.id)
+            ? { stroke: "#90caf9", strokeWidth: 2 } // Highlight visited edges
+            : edge.style,
+        }))
+      );
+
       stepIndex++;
     }, 1000); // Change steps every 1 second
   };
 
   const generateGraph = () => {
-    if (selectedAlgorithms.length === 0) {
+    if (!selectedGraphGenerator) {
       setOpenSnackbar(true);
-      setAlertMessage("Please select an algorithm to generate");
+      setAlertMessage("Please select a graph type to generate.");
       return;
     }
-    if (selectedAlgorithms[0] === "BFS") {
-      const graph = generateBFSGraph().graph;
-      setNodes(graph.nodes);
-      setEdges(graph.edges);
-    } else if (selectedAlgorithms[0] === "DFS") {
-      const graph = generateDFSGraph().graph;
-      setNodes(graph.nodes);
-      setEdges(graph.edges);
-    } else {
-      setNodes([]);
-      setEdges([]);
-    }
+
+    const graph = graphGenerators[selectedGraphGenerator]().graph;
+    setNodes(graph.nodes);
+    setEdges(graph.edges);
   };
 
   const handleRefresh = () => {
     setSelectedAlgorithms([]);
+    setSelectedGraphGenerator("");
     setIsRunning(false);
     setIsPaused(false);
     setNodes([]);
@@ -122,7 +121,7 @@ const GraphVisualizer = () => {
           display: "flex",
           flexDirection: "column",
           gap: "1px",
-          marginTop: "-40px",
+          marginTop: "-50px",
         }}
       >
         <AlgorithmSelector
@@ -138,9 +137,24 @@ const GraphVisualizer = () => {
             flexDirection: "row",
             gap: "10px",
             alignItems: "center",
-            marginTop: "-40px",
+            marginTop: "-20px",
           }}
         >
+          <FormControl sx={{ m:1, minWidth: 200}}>
+          <InputLabel  id="graph-generator-label">Graph type</InputLabel>
+          <Select
+            labelId="graph-generator-label"
+            value={selectedGraphGenerator}
+            onChange={(e) => setSelectedGraphGenerator(e.target.value)}
+            label="Graph Generator"
+          >
+            {Object.keys(graphGenerators).map((key) => (
+              <MenuItem key={key} value={key}>
+                {key}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
           <Button
             onClick={generateGraph}
             disabled={isRunning}

@@ -1,7 +1,5 @@
 import React from "react";
-import FormGroup from "@mui/material/FormGroup";
-import FormLabel from "@mui/material/FormLabel";
-import Typography from "@mui/material/Typography";
+import { FormGroup, FormLabel, Typography } from "@mui/material";
 import SortingAlgorithmsSelector from "./SortingAlgorithmsSelector";
 import SearchAlgorithmsSelector from "./SearchingAlgorithmsSelector";
 import GraphAlgorithmsSelector from "./GraphAlgorithmsSelector";

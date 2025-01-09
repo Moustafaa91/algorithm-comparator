@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { NavigateNext, NavigateBefore } from '@mui/icons-material';
-import IconButton from '@mui/material/IconButton';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
+import { IconButton,Box,Typography,Paper } from '@mui/material';
 
 function ArrayDisplay({ title, array }) {
   const [currentPage, setCurrentPage] = useState(0);

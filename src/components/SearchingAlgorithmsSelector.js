@@ -1,9 +1,5 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import Typography from "@mui/material/Typography";
+import {Box, FormControlLabel, Radio, RadioGroup, Typography}  from "@mui/material";
 
 function SearchingAlgorithmsSelector({
   selectedAlgorithms,

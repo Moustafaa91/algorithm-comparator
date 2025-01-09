@@ -1,15 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Slider from "@mui/material/Slider";
-import Snackbar from "@mui/material/Snackbar";
+import { Box ,Button,IconButton,Slider,Typography,Snackbar, TextField} from "@mui/material";
 import { PlayArrow, Pause, Refresh } from "@mui/icons-material";
 import { searchingAlgorithms } from "../algorithms";
 import AlgorithmSelector from "../components/AlgorithmSelector";
-import "./SearchVisualizer.css"; // Import CSS file for styling
+import "./SearchVisualizer.css"; 
 
 const SearchVisualizer = () => {
   const [array, setArray] = useState([]);

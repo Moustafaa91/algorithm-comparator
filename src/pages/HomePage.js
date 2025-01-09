@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
-import {
-  ShowChart,
-  Info,
-  InsertChart,
-  Troubleshoot,
-  AccountTree
-} from "@mui/icons-material";
+import { Tabs, Tab, Box } from "@mui/material";
+import { ShowChart, Info, InsertChart, Troubleshoot, AccountTree } from "@mui/icons-material";
 import SortingAlgorithms from "./SortingAlgorithms";
 import SortingVisualizer from "./SortingVisualizer";
 import SearchVisualizer from "./SearchVisualizer";
@@ -116,7 +108,7 @@ function HomePage() {
         </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-      <Box sx={{ bgcolor: "white", width: "1600px", height:"700px", margin: "auto", marginTop: "20px", boxShadow: 6, paddingBottom: "20px" }} >
+      <Box sx={{ bgcolor: "white", width: "1600px", height:"900px", margin: "auto", marginTop: "20px", boxShadow: 6, paddingBottom: "20px" }} >
         <GraphVisualizer />
       </Box>
       </CustomTabPanel>

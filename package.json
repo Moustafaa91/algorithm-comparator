@@ -14,19 +14,19 @@
 		"@mui/x-date-pickers": "^7.23.3",
 		"@mui/x-date-pickers-pro": "^7.23.3",
 		"@toolpad/core": "^0.11.0",
+		"@xyflow/react": "12.3.5",
 		"ajv": "^8.17.1",
 		"bootstrap": "4.6.0",
 		"cra-template": "1.2.0",
 		"dayjs": "^1.11.13",
 		"gulp": "4.0.2",
 		"gulp-append-prepend": "1.0.9",
-		"@xyflow/react": "12.3.5",
 		"loader-utils": "3.2.1",
 		"react": "18.2.0",
-		"react-dom": "18.2.0",
-		"react-scripts": "5.0.1",
 		"react-bootstrap": "2.4.0",
+		"react-dom": "18.2.0",
 		"react-router": "5.2.0",
+		"react-scripts": "5.0.1",
 		"react-spinners": "^0.15.0",
 		"reactflow": "^11.11.4",
 		"reactstrap": "8.8.1",
@@ -66,5 +66,4 @@
 	"devDependencies": {
 		"cross-env": "^7.0.3"
 	}
-	
 }

@@ -1,7 +1,7 @@
 import { nodeDefaults, graphNodesPositions } from "./graphConstants";
 import { MarkerType } from "@xyflow/react";
 
-export const generateGraph = (levels, connections, directed) => {
+const generateGraph = (levels, connections, directed) => {
     const nodes = [];
     const edges = [];
 
@@ -41,7 +41,30 @@ export const generateGraph = (levels, connections, directed) => {
     return { nodes, edges };
 };
 
-export const generateBFSGraph = () => {
+const OneConnectedGraph = () => {
+    const levels = [
+        ["0"],            
+        ["7", "1"],      
+        ["6", "2"], 
+        ["5", "3"],
+        ["4"] 
+    ];
+
+    const connections = {
+        0: ["1", "6", "5"],
+        1: ["4", "5"], 
+        2: ["7", "3"],
+        3: ["2"],
+        4 :["6"],
+        5: [ "7"],
+        6: ["0", "4"],
+        7: ["2", "5"], 
+    };
+    const {nodes, edges } = generateGraph(levels, connections, false);
+    return {graph: {nodes, edges}};
+}
+
+const TreeGraph = () => {
     const levels = [
         ["A"],            
         ["B", "C"],      
@@ -61,7 +84,7 @@ export const generateBFSGraph = () => {
     return {graph: {nodes, edges}};
 };
 
-export const generateDFSGraph = () => {
+const TreeMoreDepthGraph = () => {
     const levels = [
         ["A"],            
         ["B", "C"],      
@@ -83,4 +106,10 @@ export const generateDFSGraph = () => {
     };
     const {nodes, edges } = generateGraph(levels, connections, false);
     return {graph: {nodes, edges}};
+};
+
+export const graphGenerators = {
+    TreeGraph,
+    TreeMoreDepthGraph,
+    OneConnectedGraph,
 };

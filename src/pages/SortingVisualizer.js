@@ -2,15 +2,8 @@ import React, { useState, useEffect } from "react";
 import AlgorithmSelector from '../components/AlgorithmSelector';
 import { sortingAlgorithmsVisual } from '../algorithms';
 import "./SortingVisualizer.css";
-import Box from '@mui/material/Box';
-import Snackbar from '@mui/material/Snackbar';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Input from '@mui/material/Input';
+import  { Box ,Snackbar,TextField,Button,IconButton,Typography,Input,Slider} from '@mui/material';
 import { PlayArrow, Pause, Refresh} from "@mui/icons-material";
-import Slider from '@mui/material/Slider';
 
 const SortingVisualizer = () => {
   const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);

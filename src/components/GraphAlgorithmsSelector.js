@@ -1,11 +1,6 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import Typography from "@mui/material/Typography";
-import { generateBFSGraph } from "../utils/graphGenerator";
-import { useNodesState, useEdgesState } from "@xyflow/react";
+import  { Box, Radio,FormControlLabel,RadioGroup,Typography } from "@mui/material";
+
 
 function GraphAlgorithmsSelector({
   selectedAlgorithms,
@@ -13,10 +8,7 @@ function GraphAlgorithmsSelector({
   disabled,
 }) {
 
-    const graph = generateBFSGraph().graph;
     
-    const [nodes] = useNodesState(graph.nodes);
-    const [edges] = useEdgesState(graph.edges);
 
   const graphAlgorithms = [
     { label: "Breadth First Search", key: "BFS" },

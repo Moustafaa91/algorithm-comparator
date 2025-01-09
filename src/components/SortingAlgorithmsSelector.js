@@ -1,11 +1,5 @@
 import React from "react";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { FormGroup,FormControlLabel,Checkbox,Radio,RadioGroup,Typography,Box } from "@mui/material";
 
 function SortingAlgorithmsSelector({
   selectedAlgorithms,

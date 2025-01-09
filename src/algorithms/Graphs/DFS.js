@@ -1,6 +1,7 @@
 export const DFS = (nodes, edges) => {
     const steps = [];
     const visitedNodes = new Set();
+    const visitedEdges = new Set();
 
     const stack = [];
 
@@ -22,6 +23,7 @@ export const DFS = (nodes, edges) => {
         const neighbors = edges
             .filter(edge => edge.source === currentNodeId && !visitedNodes.has(edge.target))
             .map(edge => {
+                visitedEdges.add(edge.id);
                 return edge.target;
             });
 
@@ -30,7 +32,8 @@ export const DFS = (nodes, edges) => {
 
         // Record the step
         steps.push({
-            visitedNodes: Array.from(visitedNodes)
+            visitedNodes: Array.from(visitedNodes),
+            visitedEdges: Array.from(visitedEdges),
         });
     }
 

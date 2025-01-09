@@ -16,7 +16,7 @@ export const nodeDefaults = {
 };
 
 export const graphNodesPositions = {
-    paddingSpaceX: 100, 
+    paddingSpaceX: 200, 
     paddingSpaceY: 150,
     initialX: 50,
     initialY: 50
