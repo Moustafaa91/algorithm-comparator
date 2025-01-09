@@ -15,7 +15,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { PlayCircle } from "@mui/icons-material";
+import Typography from "@mui/material/Typography";
+import { PlayCircle, WarningAmber } from "@mui/icons-material";
 import Snackbar from "@mui/material/Snackbar";
 
 function SortingAlgorithms() {
@@ -117,6 +118,11 @@ function SortingAlgorithms() {
 
   return (
     <Box sx={{ width: "90%" }}>
+      <Typography color="warning" variant="caption">
+        <WarningAmber /> 
+        The application hangs out when running over large input, probably above 500k, and mainly using algorithms with O(n^2) running time. 
+        an optimization to run all algorithms on a backend service will be implemented soon.
+      </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
         <div
           style={{
@@ -160,7 +166,8 @@ function SortingAlgorithms() {
           />
         </div>
       </Box>
-
+      
+      
       {loading ? (
         <ClipLoader size={50} color="#8884d8" />
       ) : (
