@@ -104,6 +104,7 @@ const GraphVisualizer = () => {
     setNodes([]);
     setEdges([]);
     setSteps([]);
+    clearInterval();
   };
 
   const handleCloseSnackbar = (event, reason) => {

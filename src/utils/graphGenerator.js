@@ -90,7 +90,8 @@ const TreeMoreDepthGraph = () => {
         ["B", "C"],      
         ["D", "E", "F"], 
         ["G", "H", "I", "J"],
-        ["K", "L", "M", "N", "O"] 
+        ["K", "L", "M", "N", "O"],
+        ["P", "Q", "R", "S", "T", "U"]
     ];
 
     const connections = {
@@ -103,6 +104,10 @@ const TreeMoreDepthGraph = () => {
         G: ["K", "L"],
         H: ["M"],
         I: ["N", "O"],
+        K: ["P", "Q", "R"],
+        M: ["R", "S"],
+        O: ["T", "U"]
+
     };
     const {nodes, edges } = generateGraph(levels, connections, false);
     return {graph: {nodes, edges}};

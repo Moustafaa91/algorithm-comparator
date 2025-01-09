@@ -22,12 +22,14 @@ export function BFS(nodes, edges) {
 
         // Find neighbors (connected nodes)
         const neighbors = edges
-            .filter(edge => edge.source === currentNodeId)
+            .filter(edge => edge.source === currentNodeId && !visitedNodes.has(edge.target))
             .map(edge => {
                 visitedEdges.add(edge.id); // Highlight edge 
                 queue.push(edge.target); // Add the target to the queue
                 return edge.target;
             });
+
+            queue.push(...neighbors);
 
         // Record the step
         steps.push({
