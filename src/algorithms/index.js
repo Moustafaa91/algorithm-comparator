@@ -27,6 +27,7 @@ import { exponentialSearch } from './SearchAlgorithms/ExponentialSearch';
 import { ternarySearch } from './SearchAlgorithms/TernarySearch';
 
 import { BFS } from './Graphs/BFS';
+import { DFS } from './Graphs/DFS';
 
 export const sortingAlgorithms = {
   QuickSort: quickSort,
@@ -64,4 +65,5 @@ export const searchingAlgorithms = {
 
 export const graphAlgorithms = {
   BFS: BFS,
+  DFS: DFS
 };

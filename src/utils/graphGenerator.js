@@ -1,40 +1,86 @@
-import { Position  } from "@xyflow/react";
+import { nodeDefaults, graphNodesPositions } from "./graphConstants";
+import { MarkerType } from "@xyflow/react";
 
-const nodeDefaults = {
-    sourcePosition: Position.Right,
-    targetPosition: Position.Left,
-    style: {
-      borderRadius: '100%',
-      backgroundColor: '#fff',
-      width: 40,
-      height: 40,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  };
+export const generateGraph = (levels, connections, directed) => {
+    const nodes = [];
+    const edges = [];
 
-  const paddingSpace = 50;
-  const initialX = 50;
-  const initialY = 50;
+    levels.forEach((levelNodes, levelIndex) => {
+        const y = graphNodesPositions.initialY + levelIndex * graphNodesPositions.paddingSpaceY;
+        const levelWidth = (levelNodes.length - 1) * graphNodesPositions.paddingSpaceX;
+        const startX = graphNodesPositions.initialX - levelWidth / 2;
+
+        levelNodes.forEach((nodeId, nodeIndex) => {
+            const x = startX + nodeIndex * graphNodesPositions.paddingSpaceX;
+
+            // Add the node
+            nodes.push({
+                id: nodeId,
+                position: { x, y },
+                data: { label: nodeId },
+                ...nodeDefaults,
+            });
+
+            // Add edges based on provided connections
+            if (connections && connections[nodeId]) {
+                connections[nodeId].forEach((targetNodeId) => {
+                    edges.push({
+                        id: `${nodeId}-${targetNodeId}`,
+                        source: nodeId,
+                        target: targetNodeId,
+                        type: "straight",
+                        markerEnd: directed ? {
+                            type: MarkerType.ArrowClosed,
+                          } : undefined,
+                    });
+                });
+            }
+        });
+    });
+    
+    return { nodes, edges };
+};
 
 export const generateBFSGraph = () => {
-    const graph = {
-        nodes: [
-          { id: "A" , position: { x: 50, y: 50 }, data: { label: "A" }, ...nodeDefaults, },
-          { id: "B" , position: { x: 0, y: 100 }, data: { label: "B" }, ...nodeDefaults,},
-          { id: "C" , position: { x: 100, y: 100 }, data: { label: "C" }, ...nodeDefaults,},
-          { id: "D" , position: { x: -50, y: 150 }, data: { label: "D" }, ...nodeDefaults,},
-          { id: "E" , position: { x: 50, y: 150 }, data: { label: "E" }, ...nodeDefaults,},
-        ],
-        edges: [
-          { id: "1", source: "A", target: "B", type: "straight" },
-          { id: "2", source: "A", target: "C", type: "straight" },
-          { id: "3", source: "B", target: "D", type: "straight" },
-          { id: "4", source: "B", target: "E", type: "straight" },
-        ],
-      };
+    const levels = [
+        ["A"],            
+        ["B", "C"],      
+        ["D", "E", "F"], 
+        ["G", "H", "I", "J"] 
+    ];
 
+    const connections = {
+        A: ["B", "C"], 
+        B: ["D", "E"], 
+        C: ["F"],
+        D: ["G"],
+        E: ["H", "I"],
+        F: ["J"],
+    };
+    const {nodes, edges } = generateGraph(levels, connections, false);
+    return {graph: {nodes, edges}};
+};
 
-      return { graph };
+export const generateDFSGraph = () => {
+    const levels = [
+        ["A"],            
+        ["B", "C"],      
+        ["D", "E", "F"], 
+        ["G", "H", "I", "J"],
+        ["K", "L", "M", "N", "O"] 
+    ];
+
+    const connections = {
+        A: ["B", "C"], 
+        B: ["D", "E"], 
+        C: ["F"],
+        D: ["G"],
+        E: ["H", "I"],
+        F: ["J"],
+        G: ["K", "L"],
+        H: ["M"],
+        I: ["N", "O"],
+    };
+    const {nodes, edges } = generateGraph(levels, connections, false);
+    return {graph: {nodes, edges}};
 };

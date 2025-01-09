@@ -1,30 +1,38 @@
-// BFS.js
-export const BFS = ({ nodes, edges }) => {
+export function BFS(nodes, edges){
   const steps = [];
-  const visited = new Set();
+  const visitedNodes = new Set();
 
+  // Use a queue for BFS
   const queue = [];
-  if (nodes.length) queue.push(nodes[0].id);
+
+  // Start BFS from the first node (assuming nodes[0] is the starting point)
+  if (nodes.length > 0) {
+      queue.push(nodes[0].id);
+  }
 
   while (queue.length > 0) {
-    const current = queue.shift();
-    if (!visited.has(current)) {
-      visited.add(current);
+      const currentNodeId = queue.shift();
 
+      // Skip if already visited
+      if (visitedNodes.has(currentNodeId)) continue;
+
+      // Mark the current node as visited
+      visitedNodes.add(currentNodeId);
+
+      // Find neighbors (connected nodes)
       const neighbors = edges
-        .filter((edge) => edge.source === current)
-        .map((edge) => edge.target);
+          .filter(edge => edge.source === currentNodeId && !visitedNodes.has(edge.target))
+          .map(edge => {
+              return edge.target;
+          });
 
-      queue.push(...neighbors.filter((n) => !visited.has(n)));
+      // Add neighbors to the queue
+      queue.push(...neighbors);
 
+      // Record the step
       steps.push({
-        nodes: [current],
-        edges: edges.filter(
-          (edge) =>
-            edge.source === current && neighbors.includes(edge.target)
-        ),
+          visitedNodes: Array.from(visitedNodes)
       });
-    }
   }
 
   return steps;
