@@ -108,7 +108,7 @@ function HomePage() {
         </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-      <Box sx={{ bgcolor: "white", width: "1600px", height:"900px", margin: "auto", marginTop: "20px", boxShadow: 6, paddingBottom: "20px" }} >
+      <Box sx={{ bgcolor: "white", width: "1600px", height:"1300px", margin: "auto", marginTop: "20px", boxShadow: 6, paddingBottom: "20px" }} >
         <GraphVisualizer />
       </Box>
       </CustomTabPanel>

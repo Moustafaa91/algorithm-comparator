@@ -1,4 +1,4 @@
-export const DFS = (nodes, edges) => {
+export function DFS(nodes, edges) {
     const steps = [];
     const visitedNodes = new Set();
     const visitedEdges = new Set();
@@ -37,5 +37,5 @@ export const DFS = (nodes, edges) => {
         });
     }
 
-    return steps;
+    return { steps};
 };

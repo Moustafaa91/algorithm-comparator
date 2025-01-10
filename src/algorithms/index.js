@@ -28,6 +28,7 @@ import { ternarySearch } from './SearchAlgorithms/TernarySearch';
 
 import { BFS } from './Graphs/BFS';
 import { DFS } from './Graphs/DFS';
+import { Dijkstra } from './Graphs/Dijkstra';
 
 export const sortingAlgorithms = {
   QuickSort: quickSort,
@@ -65,5 +66,6 @@ export const searchingAlgorithms = {
 
 export const graphAlgorithms = {
   BFS: BFS,
-  DFS: DFS
+  DFS: DFS,
+  Dijkstra: Dijkstra
 };

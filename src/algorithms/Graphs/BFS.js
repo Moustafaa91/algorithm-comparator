@@ -38,5 +38,5 @@ export function BFS(nodes, edges) {
         });
     }
 
-    return steps;
+    return { steps };
 };

@@ -13,11 +13,13 @@ function GraphAlgorithmsSelector({
   const graphAlgorithms = [
     { label: "Breadth First Search", key: "BFS" },
     { label: "Depth First Search", key: "DFS" },
+    { label: "Dijkstra", key: "Dijkstra" },
   ];
 
   const algorithmDescriptions = {
     BFS: "Description of BFS.",
     DFS: "Description of DFS.",
+    Dijkstra: "Description of Dijkstra.",
   };
 
   const getCaptionText = () => {

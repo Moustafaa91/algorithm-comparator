@@ -1,7 +1,7 @@
 import { nodeDefaults, graphNodesPositions } from "./graphConstants";
 import { MarkerType } from "@xyflow/react";
 
-const generateGraph = (levels, connections, directed) => {
+const generateGraph = (levels, connections, directed, weights) => {
     const nodes = [];
     const edges = [];
 
@@ -23,7 +23,7 @@ const generateGraph = (levels, connections, directed) => {
 
             // Add edges based on provided connections
             if (connections && connections[nodeId]) {
-                connections[nodeId].forEach((targetNodeId) => {
+                connections[nodeId].forEach((targetNodeId, idx) => {
                     edges.push({
                         id: `${nodeId}-${targetNodeId}`,
                         source: nodeId,
@@ -32,6 +32,8 @@ const generateGraph = (levels, connections, directed) => {
                         markerEnd: directed ? {
                             type: MarkerType.ArrowClosed,
                           } : undefined,
+                        weight: weights ? weights[nodeId][idx] : 1,
+                        label: weights ? weights[nodeId][idx].toString() : undefined,
                     });
                 });
             }
@@ -55,14 +57,26 @@ const OneConnectedGraph = () => {
         1: ["4", "5"], 
         2: ["7", "3"],
         3: ["2"],
-        4 :["6"],
+        4: ["6"],
         5: [ "7"],
         6: ["0", "4"],
         7: ["2", "5"], 
     };
-    const {nodes, edges } = generateGraph(levels, connections, false);
+
+    const weights = {
+        0: [4, 8, 11],
+        1: [8, 2],
+        2: [7, 4],
+        3: [9],
+        4: [10],
+        5: [1],
+        6: [2, 7],
+        7: [6, 14],
+    };
+
+    const {nodes, edges } = generateGraph(levels, connections, false, weights);
     return {graph: {nodes, edges}};
-}
+};
 
 const TreeGraph = () => {
     const levels = [
