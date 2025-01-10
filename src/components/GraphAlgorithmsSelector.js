@@ -27,7 +27,7 @@ function GraphAlgorithmsSelector({
       return "No algorithm selected.";
     }
     return selectedAlgorithms
-      .map((algo) => algorithmDescriptions[algo.replace("WithSteps", "")])
+      .map((algo) => algorithmDescriptions[algo])
       .join(" ");
   };
   

@@ -65,7 +65,7 @@ export const searchingAlgorithms = {
 };
 
 export const graphAlgorithms = {
-  BFS: BFS,
-  DFS: DFS,
-  Dijkstra: Dijkstra
+  BFS: { id: BFS, requireWeight: false },
+  DFS: { id: DFS, requireWeight: false },
+  Dijkstra: { id: Dijkstra, requireWeight: true }
 };

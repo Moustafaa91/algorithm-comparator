@@ -44,10 +44,15 @@ const GraphVisualizer = () => {
             setAlertMessage("Please select a source node to run the algorithm")
             return;
           }
-          result = graphAlgorithms[selectedAlgorithms[0]](source, nodes, edges);
+          if (!graphGenerators[selectedGraphGenerator].weighted){
+            setOpenSnackbar(true);
+            setAlertMessage("This algorithm requires a weighted graph to run")
+            return;
+          }
+          result = graphAlgorithms[selectedAlgorithms[0]].id(source, nodes, edges);
         }
         else {
-          result = graphAlgorithms[selectedAlgorithms[0]](nodes, edges);
+          result = graphAlgorithms[selectedAlgorithms[0]].id(nodes, edges);
         }
         setSteps(result.steps);
         if (result.shortestPaths) setShortestPaths(result.shortestPaths);
@@ -100,14 +105,14 @@ const GraphVisualizer = () => {
             return;
         }
 
-        const graph = graphGenerators[selectedGraphGenerator]().graph;
+        const graph = graphGenerators[selectedGraphGenerator].generate().graph;
         setNodes(graph.nodes);
         setEdges(graph.edges);       
     };
 
     const handleRefresh = () => {
         setSelectedAlgorithms([]);
-        setSelectedGraphGenerator("");
+        setSelectedGraphGenerator();
         setIsRunning(false);
         setIsPaused(false);
         setNodes([]);
@@ -149,10 +154,11 @@ const GraphVisualizer = () => {
                 value={selectedGraphGenerator}
                 onChange={(e) => setSelectedGraphGenerator(e.target.value)}
                 label="Graph Generator"
+                disabled={selectedAlgorithms.length === 0}
               >
                 {Object.keys(graphGenerators).map((key) => (
-                  <MenuItem key={key} value={key}>
-                    {key}
+                  <MenuItem key={key} value={key} disabled={graphAlgorithms[selectedAlgorithms[0]]?.requireWeight && !graphGenerators[key].weighted}>
+                    {graphGenerators[key].id}
                   </MenuItem>
                 ))}
               </Select>

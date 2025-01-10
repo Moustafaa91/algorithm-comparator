@@ -163,8 +163,8 @@ const TreeMoreDepthGraph = () => {
 };
 
 export const graphGenerators = {
-    TreeGraph,
-    TreeMoreDepthGraph,
-    OneConnectedGraph,
-    WeightedGraphForDijkstra
+    TreeGraph: { id: "TreeGraph", generate: TreeGraph, weighted: false },
+    TreeMoreDepthGraph: { id: "TreeMoreDepthGraph", generate: TreeMoreDepthGraph, weighted: false },
+    OneConnectedGraph: { id: "OneConnectedGraph", generate: OneConnectedGraph, weighted: true },
+    WeightedGraphForDijkstra: { id: "WeightedGraphForDijkstra", generate: WeightedGraphForDijkstra, weighted: true }
 };
