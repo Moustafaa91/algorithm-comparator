@@ -19,6 +19,8 @@ const GraphVisualizer = () => {
     const [isRunning, setIsRunning] = useState(false);
     const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);
     const [selectedGraphGenerator, setSelectedGraphGenerator] = useState("");
+    const [source, setSource] = useState("");
+    const [sourceNeeded, setSourceNeeded] = useState(false);
     const isPausedRef = useRef(isPaused);
 
     useEffect(() => {
@@ -35,7 +37,18 @@ const GraphVisualizer = () => {
         }
 
         // Generate steps using the selected algorithm
-        const result = graphAlgorithms[selectedAlgorithms[0]](nodes, edges);
+        let result;
+        if (selectedAlgorithms[0] === "Dijkstra") {
+          if (!source){
+            setOpenSnackbar(true);
+            setAlertMessage("Please select a source node to run the algorithm")
+            return;
+          }
+          result = graphAlgorithms[selectedAlgorithms[0]](source, nodes, edges);
+        }
+        else {
+          result = graphAlgorithms[selectedAlgorithms[0]](nodes, edges);
+        }
         setSteps(result.steps);
         if (result.shortestPaths) setShortestPaths(result.shortestPaths);
         setIsRunning(true);
@@ -89,7 +102,7 @@ const GraphVisualizer = () => {
 
         const graph = graphGenerators[selectedGraphGenerator]().graph;
         setNodes(graph.nodes);
-        setEdges(graph.edges);
+        setEdges(graph.edges);       
     };
 
     const handleRefresh = () => {
@@ -101,6 +114,8 @@ const GraphVisualizer = () => {
         setEdges([]);
         setSteps([]);
         setShortestPaths([]);
+        setSource("");
+        setSourceNeeded(false);
         clearInterval();
     };
 
@@ -110,6 +125,10 @@ const GraphVisualizer = () => {
         }
         setOpenSnackbar(false);
     };
+
+    useEffect(() => {
+      setSourceNeeded(selectedAlgorithms[0] === "Dijkstra");
+    },[selectedAlgorithms[0]]);
 
     return (
       <Box sx={{ width: "90%", height: "70%" }}>
@@ -150,16 +169,44 @@ const GraphVisualizer = () => {
             <IconButton color="primary" onClick={handleRefresh}>
               <Refresh />
             </IconButton>
+            {sourceNeeded && (
+              <>
+                <Typography variant="caption">Source node:</Typography>
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                  <Select
+                    value={source}
+                    onChange={(e) => setSource(e.target.value)}
+                    label="Source Node"
+                  >
+                    {nodes.map((node) => (
+                      <MenuItem key={node.id} value={node.id}>
+                        {node.id}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </>
+            )}
           </Box>
           {shortestPaths.length > 0 && (
           <Box sx={{ marginTop: "-30px", maxHeight: "130px", overflowY: "auto" }}>
-            <Typography variant="caption">Shortest Paths:</Typography>
-            {shortestPaths.map(({ node, path, distance }) => (
-              <Typography variant="body2" key={node}>
-                Node {node}: {path.join(" -> ")} (Distance: {distance})
-              </Typography>
-            ))}
-          </Box>
+          <Typography variant="caption">Shortest Paths:</Typography>
+          {shortestPaths.map(({ node, path, distance }) => (
+            <Typography variant="subtitle2" key={node}>
+              From node: {source} to node {node}: {
+                path.map((p, index) => (
+                  <span
+                    key={p}
+                    style={{ color: "green", fontWeight: "bold" }}
+                  >
+                    {p}
+                    {index < path.length - 1 && " -> "}
+                  </span>
+                ))
+              } (Distance: {distance})
+            </Typography>
+          ))}
+        </Box>        
             )}
           <Snackbar
             open={openSnackbar}

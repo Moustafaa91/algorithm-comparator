@@ -1,5 +1,5 @@
 // Dijkstra.js
-export function Dijkstra(nodes, edges) {
+export function Dijkstra(source, nodes, edges) {
     const steps = [];
     const distances = {};
     const previous = {};
@@ -12,8 +12,7 @@ export function Dijkstra(nodes, edges) {
         previous[node.id] = null;
     });
 
-    // Assume the first node is the source
-    const source = nodes[0].id;
+    
     distances[source] = 0;
 
     const priorityQueue = [{ id: source, distance: 0 }];
@@ -31,7 +30,7 @@ export function Dijkstra(nodes, edges) {
             .filter(edge => edge.source === currentNode && !visitedNodes.has(edge.target))
             .forEach(edge => {
                 const targetNode = edge.target;
-                const newDist = distances[currentNode] + (edge.weight || 1);
+                const newDist = distances[currentNode] + (edge.weight || 0);
 
                 if (newDist < distances[targetNode]) {
                     distances[targetNode] = newDist;

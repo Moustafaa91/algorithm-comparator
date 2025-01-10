@@ -5,6 +5,8 @@ const generateGraph = (levels, connections, directed, weights) => {
     const nodes = [];
     const edges = [];
 
+    // Level are just for drawing, it's not part of graph it self
+
     levels.forEach((levelNodes, levelIndex) => {
         const y = graphNodesPositions.initialY + levelIndex * graphNodesPositions.paddingSpaceY;
         const levelWidth = (levelNodes.length - 1) * graphNodesPositions.paddingSpaceX;
@@ -43,6 +45,39 @@ const generateGraph = (levels, connections, directed, weights) => {
     return { nodes, edges };
 };
 
+const WeightedGraphForDijkstra = () => {
+    const levels = [
+        ["1","2", "3"],            
+        ["0", "8", "4"],      
+        ["7", "6" , "5"],
+    ];
+
+    const connections = {
+        0: ["1", "7"],
+        1: ["0", "7" , "2"], 
+        2: ["1", "3" , "8" , "5"],
+        3: ["2" , "5" , "4"],
+        4: ["3" , "5"],
+        5: ["6", "2" , "3" , "4"],
+        6: ["7", "8" , "5"],
+        7: ["0", "1" , "8" , "6"], 
+    };
+
+    const weights = {
+        0: [4, 8],
+        1: [4, 11, 8],
+        2: [8, 7, 2, 4],
+        3: [7, 14, 9],
+        4: [9, 10],
+        5: [2, 4, 14, 10],
+        6: [1, 6, 2],
+        7: [8, 11, 7, 1],
+    };
+
+    const {nodes, edges } = generateGraph(levels, connections, false, weights);
+    return {graph: {nodes, edges}};
+};
+
 const OneConnectedGraph = () => {
     const levels = [
         ["0"],            
@@ -58,7 +93,7 @@ const OneConnectedGraph = () => {
         2: ["7", "3"],
         3: ["2"],
         4: ["6"],
-        5: [ "7"],
+        5: ["7"],
         6: ["0", "4"],
         7: ["2", "5"], 
     };
@@ -131,4 +166,5 @@ export const graphGenerators = {
     TreeGraph,
     TreeMoreDepthGraph,
     OneConnectedGraph,
+    WeightedGraphForDijkstra
 };
