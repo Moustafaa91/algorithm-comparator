@@ -21,6 +21,7 @@ const SearchVisualizer = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [steps, setSteps] = useState([]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const sortingRequiredAlgorithms = ["BinarySearch", "JumpSearch", 'ExponentialSearch', 'TernarySearch'];
 
   // Generate a random or sorted array
