@@ -86,7 +86,7 @@ const SearchVisualizer = () => {
     if (sortingRequiredAlgorithms.includes(selectedAlgorithms[0])) {
       setArray((prevArray) => [...prevArray].sort((a, b) => a - b));
     }
-  }, [selectedAlgorithms]);
+  }, [selectedAlgorithms, sortingRequiredAlgorithms]);
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === "clickaway") {

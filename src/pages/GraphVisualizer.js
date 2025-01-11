@@ -133,7 +133,7 @@ const GraphVisualizer = () => {
 
     useEffect(() => {
       setSourceNeeded(selectedAlgorithms[0] === "Dijkstra");
-    },[selectedAlgorithms[0]]);
+    },[selectedAlgorithms]);
 
     return (
       <Box sx={{ width: "90%", height: "70%" }}>
