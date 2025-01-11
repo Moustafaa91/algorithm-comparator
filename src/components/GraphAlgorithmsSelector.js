@@ -17,10 +17,10 @@ function GraphAlgorithmsSelector({
   ];
 
   const algorithmDescriptions = {
-    BFS: "Description of BFS.",
-    DFS: "Description of DFS.",
-    Dijkstra: "Description of Dijkstra.",
-  };
+    BFS: "Breadth-First Search (BFS) explores all neighbors of a node before moving to the next depth level. It is commonly used for finding the shortest path in unweighted graphs. Complexity: Time O(V + E), Space O(V), where V is the number of vertices and E is the number of edges.",
+    DFS: "Depth-First Search (DFS) explores as far as possible along one branch before backtracking. It is useful for tasks like detecting cycles and topological sorting. Complexity: Time O(V + E), Space O(V).",
+    Dijkstra: "Dijkstra's algorithm finds the shortest path from a source node to all other nodes in a graph with non-negative edge weights. Complexity: Time O((V + E) log V) using a priority queue, Space O(V).",
+};
 
   const getCaptionText = () => {
     if (!selectedAlgorithms.length) {

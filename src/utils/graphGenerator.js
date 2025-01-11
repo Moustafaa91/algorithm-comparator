@@ -5,7 +5,7 @@ const generateGraph = (levels, connections, directed, weights) => {
     const nodes = [];
     const edges = [];
 
-    // Level are just for drawing, it's not part of graph it self
+    // Levels are used to define nodes in a level you want to draw starting from top to bottom.
 
     levels.forEach((levelNodes, levelIndex) => {
         const y = graphNodesPositions.initialY + levelIndex * graphNodesPositions.paddingSpaceY;
