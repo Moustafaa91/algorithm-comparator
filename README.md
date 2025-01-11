@@ -1,73 +1,124 @@
-# algorithm-comparator
-Web-based tool for visualizing the running time of algorithms. 
+# Algorithm Visualization
 
-# Getting Started with Create React App
+An interactive single-page web application built with **React** that allows users to visualize, compare, and analyze the performance of popular algorithms. Whether you are exploring sorting/ searching or graph algorithms, this application offers an intuitive and engaging experience.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Features
 
-## Available Scripts
+### **Sorting Algorithm Comparison**
+- Compare popular sorting algorithms side by side.
+- Analyze execution times across varying input sizes.
+- Visualize the sorting process with detailed animations.
 
-In the project directory, you can run:
+### **Sorting Algorithm Visualization**
+- Select specific algorithms to visualize (e.g., Bubble Sort, Quick Sort, etc.).
+- Customize array size and animation speed for a tailored experience.
+- Automatically generates random input arrays for sorting.
 
-### `npm start`
+### **Searching Algorithm Visualization**
+- Select algorithms like Linear Search or Binary Search for visualization.
+- Customize array size, target value, and animation speed.
+- Observe how algorithms perform step-by-step to locate target values.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### **Graph Algorithm Visualization**
+- Visualize graph algorithms, including:
+  - **Breadth-First Search (BFS)**
+  - **Depth-First Search (DFS)**
+  - **Dijkstra's Algorithm**
+- Use predefined graph structures for simplified exploration.
+- Real-time highlighting of visited nodes and edges during traversal.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## How to Add an Algorithm
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Expand the application by adding new algorithms with the following steps:
 
-### `npm run build`
+1. Add the algorithm file to the appropriate folder under **`algorithm/`**.
+2. Import the algorithm in **`algorithms/index.js`**.
+3. Integrate the new algorithm into one of the selectors:
+   - **`SortingAlgorithmsSelector.js`**
+   - **`SearchingAlgorithmsSelector.js`**
+   - **`GraphAlgorithmsSelector.js`**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Ensure input parameters and return structures align with the existing algorithms for seamless integration.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## How to Add a Custom Graph
 
-### `npm run eject`
+Customize graphs for visualization using **`utils/graphGenerator.js`**:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Define node levels using the `level` constant to specify positions (top to bottom).
+2. Use the `connections` constant to establish edges. Format:
+   ```javascript
+   source: [connectedNode1, connectedNode2, ...]
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Follow the existing structure for consistent graph generation and visualization.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Tech Stack
 
-## Learn More
+- **React**: A robust JavaScript library for building dynamic and responsive SPAs.
+- **MUI (Material-UI)**: Provides modern, accessible, and customizable UI components. [Learn more](https://mui.com/)
+- **React Flow**: A powerful library for creating interactive graph visualizations. [Learn more](https://reactflow.dev/)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Installation
 
-### Code Splitting
+### Prerequisites
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Ensure the following are installed on your system:
+- Node.js (v16 or later)
+- Yarn (preferred package manager)
 
-### Analyzing the Bundle Size
+### Steps
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Moustafaa91/algorithm-comparator.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd algorithm-comparator
+   ```
+3. Install dependencies:
+   ```bash
+   yarn install
+   ```
+4. Start the development server:
+   ```bash
+   yarn start
+   ```
+5. Open your browser and navigate to `http://localhost:3000`.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Usage
 
-### Advanced Configuration
+- Explore sorting, searching, and graph algorithms with intuitive visualizations.
+- Use the controls to customize input size, animation speed, and algorithm selection.
+- Compare execution performance or step through algorithm processes interactively.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+We welcome contributions! To contribute:
+1. Fork the repository.
+2. Create a new branch with your feature or fix.
+3. Submit a pull request for review.
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Acknowledgments
+
+A heartfelt thanks to:
+- **[Material-UI (MUI)](https://mui.com/)** for their elegant UI components.
+- **[React Flow](https://reactflow.dev/)** for simplifying graph visualization.
+
+---
+
+Enjoy exploring algorithms, and happy coding! 🚀
