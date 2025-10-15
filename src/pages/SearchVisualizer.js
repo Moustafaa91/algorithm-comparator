@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   Box,
   Card,
@@ -45,7 +45,7 @@ const SearchVisualizer = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [steps, setSteps] = useState([]);
 
-  const sortingRequiredAlgorithms = ["BinarySearch", "JumpSearch", "ExponentialSearch", "TernarySearch"];
+  const sortingRequiredAlgorithms = useMemo(() => ["BinarySearch", "JumpSearch", "ExponentialSearch", "TernarySearch"], []);
 
   const generateArray = () => {
     if (speed < 1 || speed > 1000) {
