@@ -1,8 +1,29 @@
 import React, { useState } from "react";
-import AlgorithmSelector from "../components/AlgorithmSelector";
-import InputSizeSelector from "../components/InputSizeSelector";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  FormControlLabel,
+  Checkbox,
+  Chip,
+  Grid,
+  Paper,
+  LinearProgress,
+  Alert,
+} from "@mui/material";
+import {
+  Play,
+  TrendingUp,
+  Clock,
+  BarChart3,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import AlgorithmSelector from "../components/selectors/AlgorithmSelector";
+import InputSizeSelector from "../components/selectors/InputSizeSelector";
 import ArrayDisplay from "../components/ArrayDisplay";
-import SortingTypes from "../components/SortingTypes";
+import SortingTypes from "../components/selectors/SortingTypes";
 import Chart from "../components/Chart";
 import {
   generateRandomArray,
@@ -11,10 +32,26 @@ import {
 } from "../utils/dataGenerator";
 import { sortingAlgorithms } from "../algorithms";
 import { ClipLoader } from "react-spinners";
-import { Box ,Button,Checkbox,FormControlLabel,Typography,Snackbar } from "@mui/material";
-import { PlayCircle, WarningAmber } from "@mui/icons-material";
+import toast from "react-hot-toast";
 
-function SortingAlgorithms() {
+// Helper function to get algorithm display name
+const getAlgorithmDisplayName = (key) => {
+  const algorithmNames = {
+    "BubbleSort": "Bubble Sort",
+    "QuickSort": "Quick Sort", 
+    "MergeSort": "Merge Sort",
+    "SelectionSort": "Selection Sort",
+    "InsertionSort": "Insertion Sort",
+    "HeapSort": "Heap Sort",
+    "CycleSort": "Cycle Sort",
+    "ShellSort": "Shell Sort",
+    "RadixSort": "Radix Sort",
+    "BucketSort": "Bucket Sort"
+  };
+  return algorithmNames[key] || key;
+};
+
+const SortingAlgorithms = () => {
   const [selectedAlgorithms, setSelectedAlgorithms] = useState([]);
   const [selectedSize, setSelectedSize] = useState(10);
   const [inputType, setInputType] = useState("random");
@@ -23,9 +60,12 @@ function SortingAlgorithms() {
   const [loading, setLoading] = useState(false);
   const [generationTime, setGenerationTime] = useState(0);
   const [generatedArray, setGeneratedArray] = useState([]);
-  const [sortedArray, setSortedArray] = useState([]); // Store the sorted array
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
-  const [snackbarMessage, setSnackbarMessage] = React.useState("");
+  const [sortedArray, setSortedArray] = useState([]);
+
+  // Handle algorithm selection
+  const handleAlgorithmSelection = (algorithms) => {
+    setSelectedAlgorithms(algorithms);
+  };
 
   const generateInputArray = () => {
     switch (inputType) {
@@ -38,50 +78,41 @@ function SortingAlgorithms() {
     }
   };
 
-  const handleCloseSnackbar = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpenSnackbar(false);
-  };
-
   const handleRun = async () => {
     if (selectedAlgorithms.length === 0) {
-      setSnackbarMessage("Please select at least one algorithm.");
-      setOpenSnackbar(true);
+      toast.error("Please select at least one algorithm.");
       return;
     }
 
-    // Clean up memory from previous run
     setResults([]);
     setGeneratedArray([]);
     setSortedArray([]);
     setGenerationTime(0);
 
     setLoading(true);
+    toast.loading("Running algorithms...", { id: "running" });
 
     setTimeout(async () => {
       try {
-        const { array, generationTime } = generateInputArray(selectedSize);
-        let portions = generateInputArray(selectedSize).portions;
+        const inputData = generateInputArray();
+        const { array, generationTime, portions } = inputData;
+        
+        let finalPortions = portions;
         if (onlyOneSorting) {
-          portions = [portions[portions.length - 1]];
+          finalPortions = [portions[portions.length - 1]];
         }
         setGeneratedArray(array);
 
-        // Restructure data to consolidate all algorithms
         const newResults = Array.from(
-          { length: portions.length },
+          { length: finalPortions.length },
           (_, index) => ({
             inputSize: (index + 1) * (selectedSize / 10),
           })
         );
 
-        // Run sorting algorithms in parallel
         const sortingPromises = selectedAlgorithms.map((algorithm) =>
           new Promise((resolve) => {
-            const { sortedArray, times } = sortingAlgorithms[algorithm](portions);
+            const { sortedArray, times } = sortingAlgorithms[algorithm](finalPortions);
             resolve({ algorithm, sortedArray, times });
           })
         );
@@ -90,21 +121,22 @@ function SortingAlgorithms() {
 
         sortingResults.forEach(({ algorithm, sortedArray, times }) => {
           times.forEach((time, index) => {
-            newResults[index][algorithm] = time; // Add algorithm times as separate keys
+            newResults[index][algorithm] = time;
           });
-
-          setSortedArray(sortedArray); // Save the final sorted array for the last algorithm
+          setSortedArray(sortedArray);
         });
 
         setResults(newResults);
-        setGenerationTime(generationTime); // Store generation time separately
+        setGenerationTime(generationTime);
+        toast.success("Algorithms completed successfully!", { id: "running" });
       } catch (error) {
         if (error instanceof RangeError && error.message.includes("Maximum call stack size exceeded")) {
-          setSnackbarMessage("Maximum call stack size exceeded. Please try a smaller input size.");
-          setOpenSnackbar(true);
+          toast.error("Maximum call stack size exceeded. Please try a smaller input size.");
         } else {
           console.error(error);
+          toast.error("An error occurred while running algorithms.");
         }
+        toast.dismiss("running");
       } finally {
         setLoading(false);
       }
@@ -112,72 +144,211 @@ function SortingAlgorithms() {
   };
 
   return (
-    <Box sx={{ width: "90%" }}>
-      <Typography color="warning" variant="caption">
-        <WarningAmber /> 
-        The application hangs out when running over large input, probably above 500k, and mainly using algorithms with O(n^2) running time. 
-        an optimization to run all algorithms on a backend service will be implemented soon.
-      </Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: "30px",
-            alignItems: "center",
+    <Box sx={{ maxWidth: 1400, mx: "auto" }}>
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Card
+          sx={{
+            mb: 4,
+            background: "linear-gradient(135deg, #6366f1 0%, #ec4899 100%)",
+            color: "white",
+            overflow: "hidden",
+            position: "relative",
           }}
         >
-          <AlgorithmSelector
-            selectedAlgorithms={selectedAlgorithms}
-            onSelect={setSelectedAlgorithms}
-            isVisual={false}
-            disabled={false}
-            algorithmsType="sorting"
-          />
-          <InputSizeSelector
-            selectedSize={selectedSize}
-            onSelect={setSelectedSize}
-          />
-          <SortingTypes inputType={inputType} onSelect={setInputType} />
-          <Button
-            startIcon={<PlayCircle />}
-            variant="contained"
-            onClick={handleRun}
-            disabled={loading}
-            style={{ width: "200px", height: "50px" }}
-          >
-            {loading ? "Running..." : "Run"}
-          </Button>
-          <FormControlLabel
-            control={<Checkbox checked={onlyOneSorting} onChange={() => setOnlyOneSorting(!onlyOneSorting)} />}
-            label="Show running time over only array size"
-          />
-          <Snackbar
-            open={openSnackbar}
-            autoHideDuration={800}
-            onClose={handleCloseSnackbar}
-            message={snackbarMessage}
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          />
-        </div>
-      </Box>
-      
-      
+          <CardContent sx={{ position: "relative", zIndex: 1 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
+              <Box
+                sx={{
+                  p: 1.5,
+                  borderRadius: 2,
+                  background: "rgba(255, 255, 255, 0.2)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <BarChart3 size={24} />
+              </Box>
+              <Box>
+                <Typography variant="h4" sx={{ fontWeight: 700, mb: 0.5 }}>
+                  Sorting Algorithm Comparison
+                </Typography>
+                <Typography variant="body1" sx={{ opacity: 0.9 }}>
+                  Compare the performance of different sorting algorithms
+                </Typography>
+              </Box>
+            </Box>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Controls */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        <Card sx={{ mb: 4 }}>
+          <CardContent>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={12} md={3}>
+                <AlgorithmSelector
+                  selectedAlgorithms={selectedAlgorithms}
+                  onSelect={handleAlgorithmSelection}
+                  isVisual={false}
+                  disabled={loading}
+                  algorithmsType="sorting"
+                />
+              </Grid>
+              <Grid item xs={12} md={2}>
+                <InputSizeSelector
+                  selectedSize={selectedSize}
+                  onSelect={setSelectedSize}
+                />
+              </Grid>
+              <Grid item xs={12} md={2}>
+                <SortingTypes inputType={inputType} onSelect={setInputType} />
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    onClick={handleRun}
+                    disabled={loading}
+                    startIcon={loading ? <ClipLoader size={16} color="white" /> : <Play />}
+                    sx={{
+                      background: "linear-gradient(135deg, #6366f1 0%, #ec4899 100%)",
+                      px: 4,
+                      py: 1.5,
+                    }}
+                  >
+                    {loading ? "Running..." : "Run Comparison"}
+                  </Button>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={onlyOneSorting}
+                        onChange={() => setOnlyOneSorting(!onlyOneSorting)}
+                        color="primary"
+                      />
+                    }
+                    label="Single array size"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={2}>
+                <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                  {selectedAlgorithms.map((algo, index) => (
+                    <Chip
+                      key={`${algo}-${index}`}
+                      label={getAlgorithmDisplayName(algo)}
+                      size="small"
+                      color="primary"
+                    />
+                  ))}
+                </Box>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Warning */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <Alert severity="warning" sx={{ mb: 4, borderRadius: 2 }}>
+          <Typography variant="body2">
+            <strong>Performance Notice:</strong> The application may hang with large inputs (above 500k) 
+            when using O(n²) algorithms. Backend optimization coming soon!
+          </Typography>
+        </Alert>
+      </motion.div>
+
+      {/* Results */}
       {loading ? (
-        <ClipLoader size={50} color="#8884d8" />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Card>
+            <CardContent sx={{ textAlign: "center", py: 8 }}>
+              <Box sx={{ mb: 3 }}>
+                <ClipLoader size={50} color="#6366f1" />
+              </Box>
+              <Typography variant="h6" sx={{ mb: 2 }}>
+                Running Algorithms...
+              </Typography>
+              <LinearProgress sx={{ maxWidth: 400, mx: "auto" }} />
+            </CardContent>
+          </Card>
+        </motion.div>
       ) : (
         <>
-          <Box sx={{ borderBottom: 1, borderColor: "black" }}>
-            <Chart data={results} generationTime={generationTime} onlyOneSorting={onlyOneSorting} />
-          </Box>
-          <div style={{ display: "flex", gap: "20px" }}>
-            <ArrayDisplay title="Generated Array" array={generatedArray} />
-            <ArrayDisplay title="Sorted Array" array={sortedArray} />
-          </div>
+          {results.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <Card sx={{ mb: 4 }}>
+                <CardContent>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 3 }}>
+                    <TrendingUp size={24} color="#6366f1" />
+                    <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                      Performance Comparison
+                    </Typography>
+                    <Box sx={{ ml: "auto", display: "flex", gap: 1 }}>
+                      <Chip
+                        icon={<Clock size={16} />}
+                        label={`${generationTime.toFixed(2)}ms`}
+                        size="small"
+                        color="primary"
+                        variant="outlined"
+                      />
+                    </Box>
+                  </Box>
+                  <Box sx={{ border: "1px solid", borderColor: "divider", borderRadius: 2 }}>
+                    <Chart
+                      data={results}
+                      generationTime={generationTime}
+                      onlyOneSorting={onlyOneSorting}
+                    />
+                  </Box>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {(generatedArray.length > 0 || sortedArray.length > 0) && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={6}>
+                  <ArrayDisplay title="Generated Array" array={generatedArray} />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <ArrayDisplay title="Sorted Array" array={sortedArray} />
+                </Grid>
+              </Grid>
+            </motion.div>
+          )}
         </>
       )}
     </Box>
   );
-}
+};
 
 export default SortingAlgorithms;

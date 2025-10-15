@@ -1,4 +1,4 @@
-# Algorithm Visualization
+# 🚀 Algorithm Visualizer
 
 An interactive single-page web application built with **React** that allows users to visualize, compare, and analyze the performance of popular algorithms. Whether you are exploring sorting/ searching or graph algorithms, this application offers an intuitive and engaging experience.
 
@@ -58,11 +58,24 @@ Follow the existing structure for consistent graph generation and visualization.
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-- **React**: A robust JavaScript library for building dynamic and responsive SPAs.
-- **MUI (Material-UI)**: Provides modern, accessible, and customizable UI components. [Learn more](https://mui.com/)
-- **React Flow**: A powerful library for creating interactive graph visualizations. [Learn more](https://reactflow.dev/)
+### **Frontend**
+- **React 18**: Modern React with hooks and functional components
+- **Material-UI v6**: Beautiful and accessible React components with custom theming
+- **Framer Motion**: Smooth animations and micro-interactions
+- **React Hot Toast**: Beautiful toast notifications
+- **Lucide React**: Modern icon library with beautiful icons
+
+### **Visualization**
+- **Recharts**: Composable charting library for performance metrics
+- **React Flow**: Interactive node-based graph visualizations
+- **Custom CSS**: Tailored animations and glassmorphism effects
+
+### **Styling**
+- **CSS-in-JS**: Material-UI's styled components
+- **Custom CSS**: Global styles with modern design patterns
+- **Responsive Design**: Mobile-first approach with breakpoints
 
 ---
 
